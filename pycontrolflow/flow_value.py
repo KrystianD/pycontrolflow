@@ -1,4 +1,5 @@
 import datetime
+import logging
 from abc import abstractmethod
 from typing import Type, Any, TypeVar, Optional, Generic, Union, cast
 
@@ -8,6 +9,8 @@ from pycontrolflow.IFlowValueProvider import IFlowValueProvider
 from pycontrolflow.types import TNodeInput
 
 TValue = TypeVar("TValue")
+
+logger = logging.getLogger("controlflow")
 
 
 class FlowValue(Generic[TValue], IFlowValueProvider[TValue]):
@@ -21,7 +24,7 @@ class FlowValue(Generic[TValue], IFlowValueProvider[TValue]):
         assert value is None or type(value) == self.type, f"{type(value)} not equal to {self.type}"
 
         if not self.name.startswith(("_tmp_node.", "_tmp.")):
-            # print(f"{self.name} set to {value}")
+            logger.debug(f"/{self.name}/ set to /{value}/")
             pass
         self._value = value
 

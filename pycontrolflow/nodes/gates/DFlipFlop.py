@@ -12,18 +12,20 @@ class DFlipFlop(FlowSingleOutputNode[TValue]):
     def __init__(self,
                  value: IFlowValueProvider[TValue],
                  clock: IFlowValueProvider[bool],
+                 initial_state: Optional[TValue] = None,
                  nid: Optional[str] = None, persistent: bool = False) -> None:
         super().__init__([value, clock], nid=nid)
         self._value = value
         self._clock = clock
 
+        self._initial_state = initial_state
         self._persistent = persistent
         self._value_mem: FlowMemoryCell[TValue] = None  # type: ignore # filled in setup
         self._clock_mem: FlowMemoryCell[bool] = None  # type: ignore # filled in setup
 
     def setup(self) -> None:
         super().setup()
-        self._value_mem = self._create_memory("value", self._value.get_type(), False, self._persistent)
+        self._value_mem = self._create_memory("value", self._value.get_type(), self._initial_state, self._persistent)
         self._clock_mem = self._create_memory("clock", bool, False, self._persistent)
 
     def process(self, cur_date: datetime, delta: timedelta) -> None:

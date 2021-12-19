@@ -36,21 +36,21 @@ class Comparer(FlowSingleOutputNode[bool]):
         self.set_output(state)
 
 
-class CompareGreaterThan(Comparer[bool]):
+class CompareGreaterThan(Comparer):
     def __init__(self, input1: TNodeInput[TValue], input2: TNodeInput[TValue], invert: bool = False) -> None:
         super().__init__(input1, input2, invert, lambda a, b: a > b)
 
 
-class CompareGreaterEqualTo(Comparer[bool]):
+class CompareGreaterEqualTo(Comparer):
     def __init__(self, input1: TNodeInput[TValue], input2: TNodeInput[TValue], invert: bool = False) -> None:
         super().__init__(input1, input2, invert, lambda a, b: a >= b)
 
 
-class CompareLessThan(Comparer[bool]):
+class CompareLessThan(Comparer):
     def __init__(self, input1: TNodeInput[TValue], input2: TNodeInput[TValue], invert: bool = False) -> None:
         super().__init__(input1, input2, invert, lambda a, b: a < b)
 
 
-class CompareLessEqualTo(Comparer[bool]):
+class CompareLessEqualTo(Comparer):
     def __init__(self, input1: TNodeInput[TValue], input2: TNodeInput[TValue], invert: bool = False) -> None:
         super().__init__(input1, input2, invert, lambda a, b: a <= b)
