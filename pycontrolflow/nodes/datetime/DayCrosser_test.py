@@ -27,7 +27,7 @@ class DayCrosserTest(unittest.TestCase):
         self.assertFalse(test1.get())
 
         state = executor.serialize_state()
-        print(executor.serialize_state())
+        # print(executor.serialize_state())
 
         self.assertEqual('{"_node.dc.date": "2020-01-02T09:00:00"}', json.dumps(state))
 
@@ -59,7 +59,7 @@ class DayCrosserTest(unittest.TestCase):
         self.assertFalse(test1.get())
 
         state = executor.serialize_state()
-        print(executor.serialize_state())
+        # print(executor.serialize_state())
 
         self.assertEqual('{"_node.dc.date": "2020-01-02T09:00:00"}', json.dumps(state))
 

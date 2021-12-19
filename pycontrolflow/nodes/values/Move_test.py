@@ -18,7 +18,7 @@ class MoveTest(unittest.TestCase):
         ])
 
         executor.run(datetime.now())
-        self.assertEquals(2, var1.get())
+        self.assertEqual(2, var1.get())
 
     def test_reg(self):
         executor = FlowExecutor()
@@ -33,11 +33,11 @@ class MoveTest(unittest.TestCase):
         var1.set(5)
         var2.set(6)
 
-        self.assertEquals(5, var1.get())
-        self.assertEquals(6, var2.get())
+        self.assertEqual(5, var1.get())
+        self.assertEqual(6, var2.get())
         executor.run(datetime.now())
-        self.assertEquals(5, var1.get())
-        self.assertEquals(5, var2.get())
+        self.assertEqual(5, var1.get())
+        self.assertEqual(5, var2.get())
 
 
 if __name__ == '__main__':

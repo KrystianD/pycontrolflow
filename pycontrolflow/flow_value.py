@@ -21,7 +21,8 @@ class FlowValue(Generic[TValue], IFlowValueProvider[TValue]):
         assert value is None or type(value) == self.type, f"{type(value)} not equal to {self.type}"
 
         if not self.name.startswith(("_tmp_node.", "_tmp.")):
-            print(f"{self.name} set to {value}")
+            # print(f"{self.name} set to {value}")
+            pass
         self._value = value
 
     def increment(self, value: TValue) -> None:

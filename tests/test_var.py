@@ -2,7 +2,7 @@ import unittest
 from datetime import datetime
 
 from pycontrolflow.FlowExecutor import FlowExecutor
-from pycontrolflow.nodes.values.MoveValue import MoveValue
+from pycontrolflow.nodes.values.Move import Move
 
 
 class VarTest(unittest.TestCase):
@@ -12,7 +12,7 @@ class VarTest(unittest.TestCase):
         var1 = executor.var("var1", int)
 
         executor.add([
-            MoveValue(10, var1),
+            Move(10, var1),
         ])
 
         executor.run(datetime(2020, 1, 1))

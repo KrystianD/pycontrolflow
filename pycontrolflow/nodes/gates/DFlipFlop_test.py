@@ -31,6 +31,10 @@ class Test(unittest.TestCase):
         tick(value=False, clock=True, expected_value=False)
         tick(value=False, clock=False, expected_value=False)
 
+        tick(value=False, clock=True, expected_value=False)
+        tick(value=True, clock=True, expected_value=False)
+        tick(value=False, clock=True, expected_value=False)
+
 
 if __name__ == '__main__':
     unittest.main()
