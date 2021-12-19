@@ -69,6 +69,9 @@ class FlowValue(Generic[TValue], IFlowValueProvider[TValue]):
         else:
             self._value = cast(TValue, data)
 
+    def get_type(self):
+        return self.type
+
     @abstractmethod
     def start_cycle(self) -> None:
         pass
