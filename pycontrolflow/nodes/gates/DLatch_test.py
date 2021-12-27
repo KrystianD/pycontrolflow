@@ -14,7 +14,7 @@ class Test(unittest.TestCase):
         var_out = executor.var("out", bool)
 
         executor.add([
-            DLatch(var_d, var_e).to(var_out)
+            DLatch(var_d, var_e, initial_state=False).to(var_out)
         ])
 
         def tick(value, enable, expected_value):

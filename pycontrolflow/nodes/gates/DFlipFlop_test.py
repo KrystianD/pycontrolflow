@@ -14,7 +14,7 @@ class Test(unittest.TestCase):
         var_out = executor.var("out", bool)
 
         executor.add([
-            DFlipFlop(var_d, var_c).to(var_out)
+            DFlipFlop(var_d, var_c, initial_state=False).to(var_out)
         ])
 
         def tick(value, clock, expected_value):
