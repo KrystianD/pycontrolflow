@@ -8,6 +8,7 @@ from pycontrolflow.IFlowValueProvider import IFlowValueProvider
 if TYPE_CHECKING:
     from pycontrolflow.Flow import Flow
     from pycontrolflow.FlowExecutor import FlowExecutor
+    from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
 
 T = TypeVar("T")
 
@@ -35,9 +36,7 @@ class FlowNode:
         from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
 
         for provider in self.providers:
-            if isinstance(provider, FlowSingleOutputNode):
-                provider.setup()
-                provider.to(self.flow_executor.var(f"_tmp.{random_string(10)}", provider.get_type()))
+            self._register_provider(provider)
 
     def reset_state(self) -> None:
         for provider in self.providers:
@@ -52,3 +51,10 @@ class FlowNode:
     def _create_memory(self, name: str, var_type: Type[T], default: Any = None, persistent: bool = False) -> FlowMemoryCell[T]:
         # noinspection PyProtectedMember
         return self.flow_executor._memory_for_node(self.nid, name, var_type, default, persistent)
+
+    def _register_provider(self, provider: 'FlowSingleOutputNode'):
+        from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
+
+        if isinstance(provider, FlowSingleOutputNode):
+            provider.setup()
+            provider.to(self.flow_executor.var(f"_tmp.{random_string(10)}", provider.get_type()))
