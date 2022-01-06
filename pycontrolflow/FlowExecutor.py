@@ -26,7 +26,6 @@ class FlowExecutor:
         self.prev_timestamp: Optional[datetime] = None
 
     def set_value(self, name: str, value: Any) -> None:
-        print(f"{name} set to {value}")
         self._values[name].set(value)
 
     def get_value(self, name: str) -> Any:
