@@ -13,8 +13,8 @@ class If(FlowNode):
         self.if_flow = if_flow if isinstance(if_flow, Flow) else Flow.create(*if_flow)
         self.else_flow = (else_flow if isinstance(else_flow, Flow) else Flow.create(*else_flow)) if else_flow is not None else None
 
-        self.register_subflows(self.if_flow)
-        self.register_subflows(self.else_flow)
+        self.register_subflow(self.if_flow)
+        self.register_subflow(self.else_flow)
 
     def process(self, cur_date: datetime, delta: timedelta) -> None:
         super().process(cur_date, delta)

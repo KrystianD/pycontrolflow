@@ -27,7 +27,7 @@ class FlowNode:
             if isinstance(provider, FlowNode):
                 provider.set_executor(flow_executor)
 
-    def register_subflows(self, flow: Optional['Flow']) -> None:
+    def register_subflow(self, flow: Optional['Flow']) -> None:
         if flow is not None:
             self.subflows.append(flow)
 

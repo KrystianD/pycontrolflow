@@ -29,8 +29,7 @@ class FlowValue(Generic[TValue], IFlowValueProvider[TValue]):
         self._value = value
 
     def increment(self, value: TValue) -> None:
-        cur_value = self.get()
-        assert cur_value is not None
+        cur_value = self.get_notnull()
         self.set(cur_value + value)  # type: ignore
 
     def get(self) -> Optional[TValue]:
