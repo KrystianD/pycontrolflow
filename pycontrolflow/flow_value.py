@@ -13,6 +13,16 @@ TValue = TypeVar("TValue")
 logger = logging.getLogger("controlflow")
 
 
+def convert_and_check_value(value: Any, target_type: Type):
+    # allow implicit int -> float cast
+    if type(value) == int and target_type == float:
+        value = float(value)
+
+    assert value is None or type(value) == target_type, f"{type(value)} not equal to {target_type}"
+
+    return value
+
+
 class FlowValue(Generic[TValue], IFlowValueProvider[TValue]):
     def __init__(self, name: str, value_type: Type[TValue], default: Optional[TValue]) -> None:
         self.name = name
@@ -21,7 +31,7 @@ class FlowValue(Generic[TValue], IFlowValueProvider[TValue]):
         self._value = default
 
     def set(self, value: Optional[TValue]) -> None:
-        assert value is None or type(value) == self.type, f"{type(value)} not equal to {self.type}"
+        value = convert_and_check_value(value, self.type)
 
         if not self.name.startswith(("_tmp_node.", "_tmp.")):
             logger.debug(f"/{self.name}/ set to /{value}/")
