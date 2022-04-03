@@ -1,17 +1,17 @@
 from datetime import datetime, timedelta
 from typing import Optional, TypeVar
 
-from pycontrolflow.IFlowValueProvider import IFlowValueProvider
-from pycontrolflow.flow_value import resolve_value_assert, resolve_value
+from pycontrolflow.flow_value import resolve_value, resolve_value_assert_not_null
 from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
+from pycontrolflow.types import TNodeInput
 
 TValue = TypeVar("TValue")
 
 
 class DLatch(FlowSingleOutputNode[TValue]):
     def __init__(self,
-                 value: IFlowValueProvider[TValue],
-                 enable: IFlowValueProvider[bool],
+                 value: TNodeInput[TValue],
+                 enable: TNodeInput[bool],
                  initial_state: Optional[TValue] = None,
                  nid: Optional[str] = None, persistent: bool = False) -> None:
         super().__init__([value, enable], nid=nid)
@@ -29,7 +29,7 @@ class DLatch(FlowSingleOutputNode[TValue]):
     def process(self, cur_date: datetime, delta: timedelta) -> None:
         super().process(cur_date, delta)
         value = resolve_value(self._value)
-        enable = resolve_value_assert(self._enable, bool, allow_null=False)
+        enable = resolve_value_assert_not_null(self._enable, bool)
 
         if enable is True:
             self._value_mem.set(value)

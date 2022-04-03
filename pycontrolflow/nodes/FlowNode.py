@@ -3,7 +3,7 @@ from typing import Iterable, List, Optional, TYPE_CHECKING, Type, Any, TypeVar
 
 from pycontrolflow.flow_value import FlowMemoryCell
 from pycontrolflow.string_utils import random_string
-from pycontrolflow.IFlowValueProvider import IFlowValueProvider
+from pycontrolflow.types import TNodeInput
 
 if TYPE_CHECKING:
     from pycontrolflow.Flow import Flow
@@ -52,7 +52,7 @@ class FlowNode:
         # noinspection PyProtectedMember
         return self.flow_executor._memory_for_node(self.nid, name, var_type, default, persistent)
 
-    def _register_provider(self, provider: 'FlowSingleOutputNode'):
+    def _register_provider(self, provider: TNodeInput[Any]) -> None:
         from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
 
         if isinstance(provider, FlowSingleOutputNode):

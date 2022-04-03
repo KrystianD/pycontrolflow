@@ -12,8 +12,10 @@ TValue = TypeVar("TValue")
 
 logger = logging.getLogger("controlflow")
 
+T = TypeVar("T")
 
-def convert_and_check_value(value: Any, target_type: Type):
+
+def convert_and_check_value(value: Any, target_type: Type[T]) -> Optional[T]:
     # allow implicit int -> float cast
     if type(value) == int and target_type == float:
         value = float(value)
@@ -81,7 +83,7 @@ class FlowValue(Generic[TValue], IFlowValueProvider[TValue]):
         else:
             self._value = cast(TValue, data)
 
-    def get_type(self):
+    def get_type(self) -> Type[TValue]:
         return self.type
 
     @abstractmethod
@@ -110,7 +112,7 @@ def resolve_value(value: TNodeInput[TValue]) -> Optional[TValue]:
         return value
 
 
-def assert_type(value: Any, var_type: Any, allow_null: bool):
+def assert_type(value: Any, var_type: Any, allow_null: bool) -> None:
     if not allow_null:
         assert value is not None
     assert isinstance(value, var_type)
@@ -123,3 +125,7 @@ def resolve_value_assert(value: TNodeInput[TValue], var_type: Type[TValue], *, a
     else:
         assert_type(value, var_type, allow_null=allow_null)
         return value
+
+
+def resolve_value_assert_not_null(value: TNodeInput[TValue], var_type: Type[TValue]) -> TValue:
+    return cast(TValue, resolve_value_assert(value, var_type, allow_null=False))
