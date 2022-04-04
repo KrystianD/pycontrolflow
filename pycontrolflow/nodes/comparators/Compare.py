@@ -1,11 +1,9 @@
 from datetime import datetime, timedelta
-from typing import TypeVar, Union, Callable
+from typing import TypeVar, Callable
 
-from pycontrolflow.IFlowValueProvider import IFlowValueProvider
-from pycontrolflow.flow_value import FlowValue, resolve_value
-from pycontrolflow.nodes.FlowNode import FlowNode
+from pycontrolflow.flow_value import resolve_value_notnull
 from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
-from pycontrolflow.types import TNodeInput
+from pycontrolflow.types import TNodeInput, TComparable
 
 TValue = TypeVar("TValue")
 
@@ -24,8 +22,8 @@ class Comparer(FlowSingleOutputNode[bool]):
 
     def process(self, cur_date: datetime, delta: timedelta) -> None:
         super().process(cur_date, delta)
-        value1 = resolve_value(self._input1)
-        value2 = resolve_value(self._input2)
+        value1 = resolve_value_notnull(self._input1)
+        value2 = resolve_value_notnull(self._input2)
         assert type(value1) == type(value2)
 
         state = self._op(value1, value2)
@@ -37,20 +35,20 @@ class Comparer(FlowSingleOutputNode[bool]):
 
 
 class CompareGreaterThan(Comparer):
-    def __init__(self, input1: TNodeInput[TValue], input2: TNodeInput[TValue], invert: bool = False) -> None:
+    def __init__(self, input1: TNodeInput[TComparable], input2: TNodeInput[TComparable], invert: bool = False) -> None:
         super().__init__(input1, input2, invert, lambda a, b: a > b)
 
 
 class CompareGreaterEqualTo(Comparer):
-    def __init__(self, input1: TNodeInput[TValue], input2: TNodeInput[TValue], invert: bool = False) -> None:
-        super().__init__(input1, input2, invert, lambda a, b: a >= b)
+    def __init__(self, input1: TNodeInput[TComparable], input2: TNodeInput[TComparable], invert: bool = False) -> None:
+        super().__init__(input1, input2, invert, lambda a, b: not a < b)
 
 
 class CompareLessThan(Comparer):
-    def __init__(self, input1: TNodeInput[TValue], input2: TNodeInput[TValue], invert: bool = False) -> None:
+    def __init__(self, input1: TNodeInput[TComparable], input2: TNodeInput[TComparable], invert: bool = False) -> None:
         super().__init__(input1, input2, invert, lambda a, b: a < b)
 
 
 class CompareLessEqualTo(Comparer):
-    def __init__(self, input1: TNodeInput[TValue], input2: TNodeInput[TValue], invert: bool = False) -> None:
-        super().__init__(input1, input2, invert, lambda a, b: a <= b)
+    def __init__(self, input1: TNodeInput[TComparable], input2: TNodeInput[TComparable], invert: bool = False) -> None:
+        super().__init__(input1, input2, invert, lambda a, b: not a > b)

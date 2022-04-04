@@ -112,6 +112,14 @@ def resolve_value(value: TNodeInput[TValue]) -> Optional[TValue]:
         return value
 
 
+def resolve_value_notnull(value: TNodeInput[TValue]) -> TValue:
+    if isinstance(value, IFlowValueProvider):
+        value = value.get()
+
+    assert value is not None
+    return value
+
+
 def assert_type(value: Any, var_type: Any, allow_null: bool) -> None:
     if not allow_null:
         assert value is not None
