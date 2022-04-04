@@ -15,6 +15,16 @@ class Comparer(FlowSingleOutputNode[bool]):
                  invert: bool,
                  op: Callable[[TValue, TValue], bool]) -> None:
         super().__init__([input1, input2])
+
+        self_type = self.get_type()
+        input1_type = input1.get_type()
+        input2_type = input2.get_type()
+
+        if input1_type != self.get_type():
+            raise TypeError(f"Comparer argument 1 type is wrong, got: {input1_type}, expected: {self_type}")
+        if input2_type != self.get_type():
+            raise TypeError(f"Comparer argument 2 type is wrong, got: {input2_type}, expected: {self_type}")
+
         self._input1 = input1
         self._input2 = input2
         self._invert = invert

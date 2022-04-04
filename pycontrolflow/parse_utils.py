@@ -7,9 +7,9 @@ def parse_time(time_val: Union[time, str]) -> time:
     if isinstance(time_val, time):
         return time_val
     elif isinstance(time_val, str):
-        if re.match("\d+:\d+:\d+", time_val) is not None:
+        if re.match(r"\d+:\d+:\d+", time_val) is not None:
             return datetime.strptime(time_val, "%H:%M:%S").time()
-        elif re.match("\d+:\d+", time_val) is not None:
+        elif re.match(r"\d+:\d+", time_val) is not None:
             return datetime.strptime(time_val, "%H:%M").time()
         else:
             raise ValueError

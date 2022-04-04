@@ -15,6 +15,8 @@ class FlowSingleOutputNode(Generic[TFlowSingleOutputNodeType], FlowNode, IFlowVa
         self.output_value: Optional[FlowValue[TFlowSingleOutputNodeType]] = None
 
     def to(self, output_value: FlowValue[TFlowSingleOutputNodeType]) -> 'FlowSingleOutputNode[TFlowSingleOutputNodeType]':
+        if output_value.get_type() != self.get_type():
+            raise TypeError("output type does not match expected type (bool)")
         self.output_value = output_value
         return self
 
