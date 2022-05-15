@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from typing import TypeVar
+from typing import TypeVar, Generic
 
 from pycontrolflow.flow_value import FlowValue, resolve_value
 from pycontrolflow.nodes.FlowNode import FlowNode
@@ -8,9 +8,9 @@ from pycontrolflow.types import TNodeInput
 TValue = TypeVar("TValue")
 
 
-class Move(FlowNode):
+class Move(FlowNode, Generic[TValue]):
     def __init__(self, input_name: TNodeInput[TValue], output_name: FlowValue[TValue]) -> None:
-        super().__init__()
+        super().__init__([])
         self.input_name = input_name
         self.output_name = output_name
 

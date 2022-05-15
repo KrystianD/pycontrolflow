@@ -10,7 +10,7 @@ class ConditionMonitorTest(unittest.TestCase):
     def test1(self) -> None:
         executor = FlowExecutor()
 
-        test1 = executor.memory("test1", bool)
+        test1 = executor.memory("test1", bool, initial_value=False)
         test_met = executor.var("test_met", bool)
         test_met_time = executor.var("test_met_time", timedelta)
 

@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from typing import TypeVar, Callable
+from typing import TypeVar, Callable, Generic
 
 from pycontrolflow.flow_value import wrap_input
 from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
@@ -45,21 +45,21 @@ class Comparer(FlowSingleOutputNode[bool]):
         self.set_output(state)
 
 
-class CompareGreaterThan(Comparer):
+class CompareGreaterThan(Comparer, Generic[TComparable]):
     def __init__(self, input1: TNodeInput[TComparable], input2: TNodeInput[TComparable], invert: bool = False) -> None:
         super().__init__(input1, input2, invert, lambda a, b: a > b)
 
 
-class CompareGreaterEqualTo(Comparer):
+class CompareGreaterEqualTo(Comparer, Generic[TComparable]):
     def __init__(self, input1: TNodeInput[TComparable], input2: TNodeInput[TComparable], invert: bool = False) -> None:
         super().__init__(input1, input2, invert, lambda a, b: not a < b)
 
 
-class CompareLessThan(Comparer):
+class CompareLessThan(Comparer, Generic[TComparable]):
     def __init__(self, input1: TNodeInput[TComparable], input2: TNodeInput[TComparable], invert: bool = False) -> None:
         super().__init__(input1, input2, invert, lambda a, b: a < b)
 
 
-class CompareLessEqualTo(Comparer):
+class CompareLessEqualTo(Comparer, Generic[TComparable]):
     def __init__(self, input1: TNodeInput[TComparable], input2: TNodeInput[TComparable], invert: bool = False) -> None:
         super().__init__(input1, input2, invert, lambda a, b: not a > b)

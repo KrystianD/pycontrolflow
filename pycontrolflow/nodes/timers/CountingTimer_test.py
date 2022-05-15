@@ -9,7 +9,7 @@ class CountingTimerTest(unittest.TestCase):
     def test1(self) -> None:
         executor = FlowExecutor()
 
-        var = executor.memory("var", bool)
+        var = executor.memory("var", bool, initial_value=False)
         out = executor.var("out", bool)
 
         executor.add([

@@ -10,8 +10,8 @@ class Test(unittest.TestCase):
     def test1(self) -> None:
         executor = FlowExecutor()
 
-        var_s = executor.memory("var_s", bool)
-        var_r = executor.memory("var_r", bool)
+        var_s = executor.memory("var_s", bool, initial_value=False)
+        var_r = executor.memory("var_r", bool, initial_value=False)
         var_out = executor.var("out", bool)
 
         executor.add([

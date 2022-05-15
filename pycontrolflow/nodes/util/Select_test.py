@@ -10,8 +10,8 @@ class Test(unittest.TestCase):
     def test_fixed(self) -> None:
         executor = FlowExecutor()
 
-        cond1 = executor.memory("cond1", bool)
-        cond2 = executor.memory("cond2", bool)
+        cond1 = executor.memory("cond1", bool, initial_value=False)
+        cond2 = executor.memory("cond2", bool, initial_value=False)
         var_out = executor.var("out", int)
 
         executor.add([
@@ -40,11 +40,11 @@ class Test(unittest.TestCase):
     def test_input(self) -> None:
         executor = FlowExecutor()
 
-        cond1 = executor.memory("cond1", bool)
-        value1 = executor.memory("value1", int)
-        cond2 = executor.memory("cond2", bool)
-        value2 = executor.memory("value2", int)
-        value_def = executor.memory("value_def", int)
+        cond1 = executor.memory("cond1", bool, initial_value=False)
+        value1 = executor.memory("value1", int, initial_value=0)
+        cond2 = executor.memory("cond2", bool, initial_value=False)
+        value2 = executor.memory("value2", int, initial_value=0)
+        value_def = executor.memory("value_def", int, initial_value=0)
         var_out = executor.var("out", int)
 
         executor.add([

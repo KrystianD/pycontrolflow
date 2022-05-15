@@ -80,13 +80,13 @@ class FlowExecutor:
         for line in self._flow.items:
             line.reset_state()
 
-    def memory(self, name: str, var_type: Type[T], default: Any = None, persistent: bool = False) -> FlowMemoryCell[T]:
-        obj = FlowMemoryCell(name, var_type, default, persistent=persistent)
+    def memory(self, name: str, var_type: Type[T], initial_value: T, persistent: bool = False) -> FlowMemoryCell[T]:
+        obj = FlowMemoryCell(name, var_type, initial_value, persistent=persistent)
         self._values[name] = obj
         return obj
 
-    def var(self, name: str, var_type: Type[T], default: Any = None) -> FlowVariable[T]:
-        obj = FlowVariable(name, var_type, default)
+    def var(self, name: str, var_type: Type[T], default: Optional[T] = None) -> FlowVariable[T]:
+        obj = FlowVariable(name, var_type, default if default is not None else var_type())
         self._values[name] = obj
         return obj
 
@@ -106,11 +106,11 @@ class FlowExecutor:
         path = f"_tmp_node.{random_string(10)}.{name}"
         return self.var(path, var_type, default)
 
-    def _memory_for_node(self, nid: Optional[str], name: str, var_type: Type[T], default: Any = None, persistent: bool = False) -> FlowMemoryCell[T]:
+    def _memory_for_node(self, nid: Optional[str], name: str, var_type: Type[T], initial_value: T, persistent: bool = False) -> FlowMemoryCell[T]:
         if persistent:
             if nid is None:
                 raise Exception("can't create persistent memory cell without node id (nid)")
             path = f"_node.{nid}.{name}"
         else:
             path = f"_tmp_node.{random_string(10)}.{name}"
-        return self.memory(path, var_type, default, persistent)
+        return self.memory(path, var_type, initial_value, persistent)

@@ -9,12 +9,12 @@ class Test(unittest.TestCase):
     def test1(self) -> None:
         executor = FlowExecutor()
 
-        var_d = executor.memory("var_d", bool)
-        var_c = executor.memory("var_c", bool)
+        var_d = executor.memory("var_d", bool, initial_value=False)
+        var_c = executor.memory("var_c", bool, initial_value=False)
         var_out = executor.var("out", bool)
 
         executor.add([
-            DFlipFlop(var_d, var_c, initial_state=False).to(var_out)
+            DFlipFlop[bool](var_d, var_c, initial_state=False).to(var_out)
         ])
 
         def tick(value: bool, clock: bool, expected_value: bool) -> None:

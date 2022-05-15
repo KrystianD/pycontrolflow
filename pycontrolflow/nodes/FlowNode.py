@@ -15,7 +15,7 @@ T = TypeVar("T")
 
 
 class FlowNode:
-    def __init__(self, providers: Sequence[IFlowValueProvider] = None, nid: Optional[str] = None) -> None:
+    def __init__(self, providers: Sequence[IFlowValueProvider], nid: Optional[str] = None) -> None:
         self.nid = nid
         self.providers: Sequence[IFlowValueProvider] = providers
         self.flow_executor: 'FlowExecutor' = None  # type: ignore
@@ -49,9 +49,9 @@ class FlowNode:
             if isinstance(provider, FlowNode):
                 provider.process(cur_date, delta)
 
-    def _create_memory(self, name: str, var_type: Type[T], default: Any = None, persistent: bool = False) -> FlowMemoryCell[T]:
+    def _create_memory(self, name: str, var_type: Type[T], initial_value: T, persistent: bool = False) -> FlowMemoryCell[T]:
         # noinspection PyProtectedMember
-        return self.flow_executor._memory_for_node(self.nid, name, var_type, default, persistent)
+        return self.flow_executor._memory_for_node(self.nid, name, var_type, initial_value, persistent)
 
     def _register_provider(self, provider: TNodeInput[Any]) -> None:
         from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode

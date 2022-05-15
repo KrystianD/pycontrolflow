@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from typing import Any, TypeVar, List, Callable
 
-from pycontrolflow.flow_value import resolve_value
+from pycontrolflow.flow_value import resolve_value, wrap_input
 from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
 from pycontrolflow.types import TNodeInput
 
@@ -12,13 +12,15 @@ TInputParams = TNodeInput[Any]
 
 class Transform(FlowSingleOutputNode[TOutput]):
     def __init__(self, transformer_cb: Callable[[List[TInputParams]], TOutput], *input_values: TInputParams) -> None:
-        super().__init__(input_values)
-        self.input_values = input_values
+        self.input_values = [wrap_input(x) for x in input_values]
+
+        super().__init__(self.input_values)
+
         self.transformer_cb = transformer_cb
 
     def process(self, cur_date: datetime, delta: timedelta) -> None:
         super().process(cur_date, delta)
 
-        output = self.transformer_cb([resolve_value(x) for x in self.input_values])
+        output = self.transformer_cb([x.get_notnull() for x in self.input_values])
 
         self.set_output(output)

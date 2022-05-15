@@ -14,7 +14,7 @@ class CompareTest(unittest.TestCase):
         out = executor.var("out", bool)
 
         executor.add([
-            CompareGreaterThan(in1, 2.0).to(out),
+            CompareGreaterThan[float](in1, 2.0).to(out),
         ])
 
         executor.run(datetime(2020, 1, 1, 15, 0, 00))

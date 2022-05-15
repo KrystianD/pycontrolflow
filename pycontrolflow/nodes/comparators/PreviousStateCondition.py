@@ -11,7 +11,7 @@ TInput = TypeVar("TInput")
 TOutput = TypeVar("TOutput")
 
 
-class PreviousStateCondition(Generic[TInput, TOutput], FlowSingleOutputNode[TOutput]):
+class PreviousStateCondition(FlowSingleOutputNode[TOutput], Generic[TInput, TOutput]):
     def __init__(self, input_: TNodeInput[TInput]) -> None:
         self.input_ = wrap_input(input_)
 

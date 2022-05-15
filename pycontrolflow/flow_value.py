@@ -15,11 +15,11 @@ logger = logging.getLogger("controlflow")
 
 
 class FlowValue(Generic[TValue], IFlowValueProvider[TValue]):
-    def __init__(self, name: str, value_type: Type[TValue], default: Optional[TValue]) -> None:
+    def __init__(self, name: str, value_type: Type[TValue], default: TValue) -> None:
         self.name = name
         self.type = value_type
-        self.default = default
-        self._value = default
+        self.default = implicit_cast(default, self.type)
+        self._value = self.default
 
     def set(self, value: Optional[TValue]) -> None:
         if value is None:
@@ -43,8 +43,8 @@ class FlowValue(Generic[TValue], IFlowValueProvider[TValue]):
         assert self._value is not None
         return self._value
 
-    def get_or_default(self, default: TValue) -> TValue:
-        return default if self._value is None else self._value
+    # def get_or_default(self, default: TValue) -> TValue:
+    #     return default if self._value is None else self._value
 
     def isnull(self) -> bool:
         return self._value is None

@@ -11,7 +11,7 @@ class MoveTest(unittest.TestCase):
     def test_value(self) -> None:
         executor = FlowExecutor()
 
-        var1 = executor.memory("var1", int)
+        var1 = executor.memory("var1", int, initial_value=0)
 
         executor.add([
             Move(2, var1),
@@ -23,11 +23,11 @@ class MoveTest(unittest.TestCase):
     def test_reg(self) -> None:
         executor = FlowExecutor()
 
-        var1 = executor.memory("var1", int)
-        var2 = executor.memory("var2", int)
+        var1 = executor.memory("var1", int, initial_value=0)
+        var2 = executor.memory("var2", int, initial_value=0)
 
         executor.add([
-            Move(var1, var2),
+            Move[int](var1, var2),
         ])
 
         var1.set(5)

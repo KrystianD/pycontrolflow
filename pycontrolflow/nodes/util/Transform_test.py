@@ -9,12 +9,12 @@ class TransformTest(unittest.TestCase):
     def test1(self) -> None:
         executor = FlowExecutor()
 
-        var1 = executor.memory("var1", int)
-        var2 = executor.memory("var2", int)
+        var1 = executor.memory("var1", int, initial_value=0)
+        var2 = executor.memory("var2", int, initial_value=0)
         out = executor.var("out", int)
 
         executor.add([
-            Transform[int](lambda vals: sum(x.get() for x in vals), var1, var2).to(out),
+            Transform[int](lambda vals: sum(x for x in vals), var1, var2).to(out),
         ])
 
         var1.set(1)

@@ -15,7 +15,7 @@ class DayCrosser(FlowSingleOutputNode[bool]):
         self.prev_date: FlowMemoryCell[datetime] = None  # type: ignore
 
     def setup(self) -> None:
-        self.prev_date = self._create_memory("date", datetime, None, persistent=self.persistent)
+        self.prev_date = self._create_memory("date", datetime, initial_value=datetime.min, persistent=self.persistent)
 
     def reset_state(self) -> None:
         super().reset_state()
@@ -24,7 +24,7 @@ class DayCrosser(FlowSingleOutputNode[bool]):
     def process(self, cur_date: datetime, delta: timedelta) -> None:
         super().process(cur_date, delta)
 
-        if self.prev_date.isnull():
+        if self.prev_date.get_notnull() == datetime.min:
             self.prev_date.set(cur_date)
 
         date_point = cur_date.replace(hour=self.cross_time.hour, minute=self.cross_time.minute, second=self.cross_time.second)

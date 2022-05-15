@@ -11,7 +11,7 @@ class TimerTest(unittest.TestCase):
     def test_basic(self):
         executor = FlowExecutor()
 
-        var1 = executor.memory("var1", bool)
+        var1 = executor.memory("var1", bool, initial_value=False)
         t1 = executor.timer_one_shot("t1", "10s", extend_on_trigger=False)
 
         executor.add([
@@ -44,7 +44,7 @@ class TimerTest(unittest.TestCase):
     def test_extend(self):
         executor = FlowExecutor()
 
-        var1 = executor.memory("var1", bool)
+        var1 = executor.memory("var1", bool, initial_value=False)
         t1 = executor.timer_one_shot("t1", "10s", extend_on_trigger=True)
 
         executor.add([
@@ -79,7 +79,6 @@ class TimerTest(unittest.TestCase):
         executor.run(datetime(2020, 1, 1, 15, 0, 30))
         self.assertFalse(t1.enabled.get())
         self.assertEqual(timedelta(seconds=10), t1.timer.get())
-
 
 
 if __name__ == '__main__':

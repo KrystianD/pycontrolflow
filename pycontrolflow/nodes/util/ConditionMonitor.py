@@ -21,35 +21,35 @@ class ConditionMonitor(FlowNode):
 
     def setup(self) -> None:
         super().setup()
-        self.condition_met_start = self.flow_executor.memory("met_start", datetime, None, self.persistent)
-        self.last_condition_met_date = self.flow_executor.memory("last_met_date", datetime, None, self.persistent)
+        self.condition_met_start = self.flow_executor.memory("met_start", datetime, datetime.min, self.persistent)
+        self.last_condition_met_date = self.flow_executor.memory("last_met_date", datetime, datetime.min, self.persistent)
 
     def reset_state(self) -> None:
         super().reset_state()
-        self.last_condition_met_date.set(None)
+        self.last_condition_met_date.set(datetime.min)
 
     def process(self, cur_date: datetime, delta: timedelta) -> None:
         super().process(cur_date, delta)
         value = self.input_name.get()
         assert isinstance(value, bool)
 
-        if self.last_condition_met_date.isnotnull():
+        if self.last_condition_met_date.get_notnull() != datetime.min:
             time_since_last_met = cur_date - self.last_condition_met_date.get_notnull()
 
             if time_since_last_met > self.max_gap_time:
-                self.condition_met_start.set(None)
+                self.condition_met_start.set(datetime.min)
 
         if value:
-            if self.condition_met_start.isnull():
+            if self.condition_met_start.get_notnull() == datetime.min:
                 self.condition_met_start.set(cur_date)
 
             self.last_condition_met_date.set(cur_date)
 
         if self.output_met is not None:
-            self.output_met.set(self.condition_met_start.isnotnull())
+            self.output_met.set(self.condition_met_start.get_notnull() != datetime.min)
 
         if self.output_met_time is not None:
-            if self.condition_met_start.isnull():
+            if self.condition_met_start.get_notnull() == datetime.min:
                 self.output_met_time.set(timedelta())
             else:
                 self.output_met_time.set(cur_date - self.condition_met_start.get_notnull())
