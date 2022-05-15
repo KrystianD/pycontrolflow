@@ -10,11 +10,11 @@ TOutput = TypeVar("TOutput")
 
 class Select(FlowSingleOutputNode[TOutput]):
     def __init__(self) -> None:
-        super().__init__()
+        super().__init__([])
 
         self.conditions: List[Tuple[TNodeInput[bool], TNodeInput[TOutput]]] = []
         self.has_default = False
-        self.default_value: TNodeInput[TOutput] = None
+        self.default_value: Optional[TNodeInput[TOutput]] = None
 
     def case(self, cond1: TNodeInput[bool], value1: TNodeInput[TOutput]) -> 'Select[TOutput]':
         self._register_provider(cond1)
@@ -36,4 +36,5 @@ class Select(FlowSingleOutputNode[TOutput]):
                 return
 
         if self.has_default:
+            assert self.default_value is not None
             self.set_output(resolve_value(self.default_value))

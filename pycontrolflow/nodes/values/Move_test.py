@@ -8,7 +8,7 @@ from pycontrolflow.nodes.values.Move import Move
 
 
 class MoveTest(unittest.TestCase):
-    def test_value(self):
+    def test_value(self) -> None:
         executor = FlowExecutor()
 
         var1 = executor.memory("var1", int)
@@ -20,7 +20,7 @@ class MoveTest(unittest.TestCase):
         executor.run(datetime.now())
         self.assertEqual(2, var1.get())
 
-    def test_reg(self):
+    def test_reg(self) -> None:
         executor = FlowExecutor()
 
         var1 = executor.memory("var1", int)

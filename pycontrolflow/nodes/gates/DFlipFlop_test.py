@@ -6,7 +6,7 @@ from pycontrolflow.nodes.gates.DFlipFlop import DFlipFlop
 
 
 class Test(unittest.TestCase):
-    def test1(self):
+    def test1(self) -> None:
         executor = FlowExecutor()
 
         var_d = executor.memory("var_d", bool)
@@ -17,7 +17,7 @@ class Test(unittest.TestCase):
             DFlipFlop(var_d, var_c, initial_state=False).to(var_out)
         ])
 
-        def tick(value, clock, expected_value):
+        def tick(value: bool, clock: bool, expected_value: bool) -> None:
             var_d.set(value)
             var_c.set(clock)
             executor.run(datetime.now())

@@ -1,19 +1,20 @@
 from datetime import datetime, timedelta
 from typing import Optional
 
-from pycontrolflow.flow_value import resolve_value_assert
+from pycontrolflow.flow_value import wrap_input
 from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
 from pycontrolflow.types import TNodeInput
 
 
 class SRLatch(FlowSingleOutputNode[bool]):
     def __init__(self,
-                 set: TNodeInput[bool],
-                 reset: TNodeInput[bool],
+                 set_: TNodeInput[bool],
+                 reset_: TNodeInput[bool],
                  nid: Optional[str] = None, persistent: bool = False) -> None:
-        super().__init__([set, reset], nid=nid)
-        self._set = set
-        self._reset = reset
+        self._set = wrap_input(set_)
+        self._reset = wrap_input(reset_)
+
+        super().__init__([self._set, self._reset], nid=nid)
 
         self._persistent = persistent
         self._state_mem: FlowMemoryCell[bool] = None  # type: ignore # filled in setup
@@ -24,14 +25,14 @@ class SRLatch(FlowSingleOutputNode[bool]):
 
     def process(self, cur_date: datetime, delta: timedelta) -> None:
         super().process(cur_date, delta)
-        set = resolve_value_assert(self._set, bool, allow_null=False)
-        reset = resolve_value_assert(self._reset, bool, allow_null=False)
+        set_ = self._set.get_notnull()
+        reset_ = self._reset.get_notnull()
 
-        if set is True and reset is False:
+        if set_ is True and reset_ is False:
             self._state_mem.set(True)
-        elif set is False and reset is True:
+        elif set_ is False and reset_ is True:
             self._state_mem.set(False)
-        elif set is False and reset is False:
+        elif set_ is False and reset_ is False:
             pass
         else:
             raise Exception("invalid state, both S and R set")

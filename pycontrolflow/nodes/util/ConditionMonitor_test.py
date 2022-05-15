@@ -7,7 +7,7 @@ from pycontrolflow.nodes.util.ConditionMonitor import ConditionMonitor
 
 
 class ConditionMonitorTest(unittest.TestCase):
-    def test1(self):
+    def test1(self) -> None:
         executor = FlowExecutor()
 
         test1 = executor.memory("test1", bool)

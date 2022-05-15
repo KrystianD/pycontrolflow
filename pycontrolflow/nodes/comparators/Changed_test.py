@@ -2,10 +2,11 @@ import unittest
 from datetime import datetime
 
 from pycontrolflow.FlowExecutor import FlowExecutor
+from pycontrolflow.nodes.comparators.Changed import Changed
 from pycontrolflow.nodes.comparators.Compare import CompareGreaterThan
 
 
-class CompareTest(unittest.TestCase):
+class ChangedTest(unittest.TestCase):
     def test(self) -> None:
         executor = FlowExecutor()
 
@@ -14,7 +15,7 @@ class CompareTest(unittest.TestCase):
         out = executor.var("out", bool)
 
         executor.add([
-            CompareGreaterThan(in1, 2.0).to(out),
+            Changed[float](in1).to(out),
         ])
 
         executor.run(datetime(2020, 1, 1, 15, 0, 00))

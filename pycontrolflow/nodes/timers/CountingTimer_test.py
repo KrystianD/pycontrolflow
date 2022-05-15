@@ -6,7 +6,7 @@ from pycontrolflow.nodes.timers.CountingTimer import CountingTimer
 
 
 class CountingTimerTest(unittest.TestCase):
-    def test1(self):
+    def test1(self) -> None:
         executor = FlowExecutor()
 
         var = executor.memory("var", bool)

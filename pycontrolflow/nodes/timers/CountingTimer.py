@@ -1,15 +1,16 @@
 from datetime import datetime, timedelta
 from typing import Optional
 
-from pycontrolflow.flow_value import resolve_value, FlowMemoryCell
+from pycontrolflow.flow_value import resolve_value, FlowMemoryCell, wrap_input
 from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
 from pycontrolflow.types import TNodeInput
 
 
 class CountingTimer(FlowSingleOutputNode[bool]):
     def __init__(self, input_value: TNodeInput[bool], time: timedelta) -> None:
-        super().__init__([input_value])
-        self.input_value = input_value
+        self._input_value = wrap_input(input_value)
+
+        super().__init__([self._input_value])
         self.time = time
 
         self.condition_met_start: Optional[datetime] = None
@@ -17,7 +18,7 @@ class CountingTimer(FlowSingleOutputNode[bool]):
     def process(self, cur_date: datetime, delta: timedelta) -> None:
         super().process(cur_date, delta)
 
-        value = resolve_value(self.input_value)
+        value = self._input_value.get()
         output = False
 
         if value:

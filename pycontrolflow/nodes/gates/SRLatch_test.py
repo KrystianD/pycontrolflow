@@ -7,7 +7,7 @@ from pycontrolflow.nodes.gates.SRLatch import SRLatch
 
 
 class Test(unittest.TestCase):
-    def test1(self):
+    def test1(self) -> None:
         executor = FlowExecutor()
 
         var_s = executor.memory("var_s", bool)
@@ -18,7 +18,7 @@ class Test(unittest.TestCase):
             SRLatch(var_s, var_r).to(var_out)
         ])
 
-        def tick(set, reset, expected_value):
+        def tick(set: bool, reset: bool, expected_value: bool) -> None:
             var_s.set(set)
             var_r.set(reset)
             executor.run(datetime.now())

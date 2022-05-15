@@ -7,7 +7,7 @@ from pycontrolflow.nodes.datetime.DayCrosser import DayCrosser
 
 
 class DayCrosserTest(unittest.TestCase):
-    def test_basic(self):
+    def test_basic(self) -> None:
         executor = FlowExecutor()
 
         test1 = executor.var("test1", bool)
@@ -31,7 +31,7 @@ class DayCrosserTest(unittest.TestCase):
 
         self.assertEqual('{"_node.dc.date": "2020-01-02T09:00:00"}', json.dumps(state))
 
-    def test_custom_time(self):
+    def test_custom_time(self) -> None:
         executor = FlowExecutor()
 
         test1 = executor.var("test1", bool)

@@ -1,28 +1,17 @@
 import datetime
 import logging
 from abc import abstractmethod
-from typing import Type, Any, TypeVar, Optional, Generic, Union, cast
+from typing import Type, Any, TypeVar, Optional, Generic, Union, cast, Sequence, List
 
 import isodate
 
-from pycontrolflow.IFlowValueProvider import IFlowValueProvider
-from pycontrolflow.types import TNodeInput
+from pycontrolflow.IFlowValueProvider import IFlowValueProvider, ConstantFlowValueProvider
+from pycontrolflow.type_utils import implicit_cast
+from pycontrolflow.types import TNodeInput, TNodeInputs
 
 TValue = TypeVar("TValue")
 
 logger = logging.getLogger("controlflow")
-
-T = TypeVar("T")
-
-
-def convert_and_check_value(value: Any, target_type: Type[T]) -> Optional[T]:
-    # allow implicit int -> float cast
-    if type(value) == int and target_type == float:
-        value = float(value)
-
-    assert value is None or type(value) == target_type, f"{type(value)} not equal to {target_type}"
-
-    return value
 
 
 class FlowValue(Generic[TValue], IFlowValueProvider[TValue]):
@@ -33,7 +22,10 @@ class FlowValue(Generic[TValue], IFlowValueProvider[TValue]):
         self._value = default
 
     def set(self, value: Optional[TValue]) -> None:
-        value = convert_and_check_value(value, self.type)
+        if value is None:
+            raise ValueError("value cannot be None")
+
+        value = implicit_cast(value, self.type)
 
         if not self.name.startswith(("_tmp_node.", "_tmp.")):
             logger.debug(f"/{self.name}/ set to /{value}/")
@@ -105,6 +97,20 @@ class FlowMemoryCell(FlowValue[TValue]):
         pass
 
 
+def wrap_input(input_: TNodeInput[TValue]) -> IFlowValueProvider[TValue]:
+    if isinstance(input_, IFlowValueProvider):
+        return input_
+    else:
+        return ConstantFlowValueProvider(input_)
+
+
+def wrap_input_check_type(input_: TNodeInput[TValue], expected_type: Type[TValue]) -> IFlowValueProvider[TValue]:
+    wrapped = wrap_input(input_)
+    if wrapped.get_type() != expected_type:
+        raise TypeError(f"input type does not match expected type, got: {wrapped.get_type()}, expected: {expected_type}")
+    return wrapped
+
+
 def resolve_value(value: TNodeInput[TValue]) -> Optional[TValue]:
     if isinstance(value, IFlowValueProvider):
         return value.get()
@@ -114,10 +120,12 @@ def resolve_value(value: TNodeInput[TValue]) -> Optional[TValue]:
 
 def resolve_value_notnull(value: TNodeInput[TValue]) -> TValue:
     if isinstance(value, IFlowValueProvider):
-        value = value.get()
+        ret_value = value.get()
+    else:
+        ret_value = value
 
-    assert value is not None
-    return value
+    assert ret_value is not None
+    return ret_value
 
 
 def assert_type(value: Any, var_type: Any, allow_null: bool) -> None:

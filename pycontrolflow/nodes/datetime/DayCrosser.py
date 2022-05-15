@@ -8,7 +8,7 @@ from pycontrolflow.parse_utils import parse_time
 
 class DayCrosser(FlowSingleOutputNode[bool]):
     def __init__(self, cross_time: Optional[Union[time, str]] = None, persistent: bool = False, nid: Optional[str] = None) -> None:
-        super().__init__(nid=nid)
+        super().__init__([], nid=nid)
         self.cross_time = parse_time(cross_time) if cross_time is not None else time(0, 0, 0)
         self.persistent = persistent
 

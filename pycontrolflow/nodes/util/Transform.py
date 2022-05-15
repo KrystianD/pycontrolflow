@@ -3,13 +3,15 @@ from typing import Any, TypeVar, List, Callable
 
 from pycontrolflow.flow_value import resolve_value
 from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
-from pycontrolflow.types import TNodeInputs
+from pycontrolflow.types import TNodeInput
 
 TOutput = TypeVar("TOutput")
 
+TInputParams = TNodeInput[Any]
+
 
 class Transform(FlowSingleOutputNode[TOutput]):
-    def __init__(self, transformer_cb: Callable[[List[Any]], TOutput], *input_values: TNodeInputs[Any]) -> None:
+    def __init__(self, transformer_cb: Callable[[List[TInputParams]], TOutput], *input_values: TInputParams) -> None:
         super().__init__(input_values)
         self.input_values = input_values
         self.transformer_cb = transformer_cb

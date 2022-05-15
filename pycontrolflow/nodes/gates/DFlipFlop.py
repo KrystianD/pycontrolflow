@@ -1,22 +1,23 @@
 from datetime import datetime, timedelta
 from typing import Optional, TypeVar
 
-from pycontrolflow.IFlowValueProvider import IFlowValueProvider
-from pycontrolflow.flow_value import resolve_value_assert, resolve_value
+from pycontrolflow.flow_value import resolve_value_assert, resolve_value, wrap_input
 from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
+from pycontrolflow.types import TNodeInput
 
 TValue = TypeVar("TValue")
 
 
 class DFlipFlop(FlowSingleOutputNode[TValue]):
     def __init__(self,
-                 value: IFlowValueProvider[TValue],
-                 clock: IFlowValueProvider[bool],
+                 value: TNodeInput[TValue],
+                 clock: TNodeInput[bool],
                  initial_state: Optional[TValue] = None,
                  nid: Optional[str] = None, persistent: bool = False) -> None:
-        super().__init__([value, clock], nid=nid)
-        self._value = value
-        self._clock = clock
+        self._value = wrap_input(value)
+        self._clock = wrap_input(clock)
+
+        super().__init__([self._value, self._clock], nid=nid)
 
         self._initial_state = initial_state
         self._persistent = persistent
@@ -30,8 +31,8 @@ class DFlipFlop(FlowSingleOutputNode[TValue]):
 
     def process(self, cur_date: datetime, delta: timedelta) -> None:
         super().process(cur_date, delta)
-        value = resolve_value(self._value)
-        clock = resolve_value_assert(self._clock, bool, allow_null=False)
+        value = self._value.get()
+        clock = self._clock.get_notnull()
 
         prev_clock = self._clock_mem.get()
         if prev_clock is False and clock is True:

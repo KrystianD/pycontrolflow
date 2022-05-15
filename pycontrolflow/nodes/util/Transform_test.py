@@ -6,7 +6,7 @@ from pycontrolflow.nodes.util.Transform import Transform
 
 
 class TransformTest(unittest.TestCase):
-    def test1(self):
+    def test1(self) -> None:
         executor = FlowExecutor()
 
         var1 = executor.memory("var1", int)
@@ -14,7 +14,7 @@ class TransformTest(unittest.TestCase):
         out = executor.var("out", int)
 
         executor.add([
-            Transform(lambda x: sum(x), var1, var2).to(out),
+            Transform[int](lambda vals: sum(x.get() for x in vals), var1, var2).to(out),
         ])
 
         var1.set(1)

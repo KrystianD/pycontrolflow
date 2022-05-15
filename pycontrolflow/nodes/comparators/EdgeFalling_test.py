@@ -2,19 +2,19 @@ import unittest
 from datetime import datetime
 
 from pycontrolflow.FlowExecutor import FlowExecutor
-from pycontrolflow.nodes.comparators.Compare import CompareGreaterThan
+from pycontrolflow.nodes.comparators.EdgeFalling import EdgeFalling
 
 
-class CompareTest(unittest.TestCase):
+class EdgeFallingTest(unittest.TestCase):
     def test(self) -> None:
         executor = FlowExecutor()
 
-        in1 = executor.var("test1", float, default=1)
+        in1 = executor.var("test1", bool, default=True)
 
         out = executor.var("out", bool)
 
         executor.add([
-            CompareGreaterThan(in1, 2.0).to(out),
+            EdgeFalling(in1).to(out),
         ])
 
         executor.run(datetime(2020, 1, 1, 15, 0, 00))

@@ -5,7 +5,7 @@ from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
 
 class Startup(FlowSingleOutputNode[bool]):
     def __init__(self) -> None:
-        super().__init__()
+        super().__init__([])
 
         self.first_run = True
 

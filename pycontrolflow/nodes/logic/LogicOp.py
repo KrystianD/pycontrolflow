@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from typing import Iterable, Callable, List
+from typing import Callable, List, Sequence
 
 from pycontrolflow.flow_value import resolve_value_assert_not_null
 from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
@@ -7,7 +7,7 @@ from pycontrolflow.types import TNodeInput
 
 
 class LogicOp(FlowSingleOutputNode[bool]):
-    def __init__(self, input_values: Iterable[TNodeInput[bool]], op: Callable[[List[bool]], bool]) -> None:
+    def __init__(self, input_values: Sequence[TNodeInput[bool]], op: Callable[[List[bool]], bool]) -> None:
         super().__init__(input_values)
         self.input_values = input_values
         self.op = op

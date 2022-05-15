@@ -7,7 +7,7 @@ from pycontrolflow.nodes.util.Select import Select
 
 
 class Test(unittest.TestCase):
-    def test_fixed(self):
+    def test_fixed(self) -> None:
         executor = FlowExecutor()
 
         cond1 = executor.memory("cond1", bool)
@@ -37,7 +37,7 @@ class Test(unittest.TestCase):
         executor.run(datetime.now())
         self.assertEqual(30, var_out.get())
 
-    def test_input(self):
+    def test_input(self) -> None:
         executor = FlowExecutor()
 
         cond1 = executor.memory("cond1", bool)

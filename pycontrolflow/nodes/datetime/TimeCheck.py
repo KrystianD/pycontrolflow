@@ -7,7 +7,7 @@ from pycontrolflow.parse_utils import parse_time
 
 class TimeCheck(FlowSingleOutputNode[bool]):
     def __init__(self, start_time: Union[time, str], end_time: Union[time, str]) -> None:
-        super().__init__()
+        super().__init__([])
         self.start_time = parse_time(start_time)
         self.end_time = parse_time(end_time)
 

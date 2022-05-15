@@ -1,6 +1,7 @@
 from datetime import timedelta, datetime
-from typing import Iterable, List, Optional, TYPE_CHECKING, Type, Any, TypeVar
+from typing import Iterable, List, Optional, TYPE_CHECKING, Type, Any, TypeVar, Sequence
 
+from pycontrolflow.IFlowValueProvider import IFlowValueProvider
 from pycontrolflow.flow_value import FlowMemoryCell
 from pycontrolflow.string_utils import random_string
 from pycontrolflow.types import TNodeInput
@@ -14,9 +15,9 @@ T = TypeVar("T")
 
 
 class FlowNode:
-    def __init__(self, providers: Optional[Iterable[Any]] = None, nid: Optional[str] = None) -> None:
+    def __init__(self, providers: Sequence[IFlowValueProvider] = None, nid: Optional[str] = None) -> None:
         self.nid = nid
-        self.providers: List[Any] = list(providers) if providers is not None else []
+        self.providers: Sequence[IFlowValueProvider] = providers
         self.flow_executor: 'FlowExecutor' = None  # type: ignore
 
         self.subflows: List['Flow'] = []

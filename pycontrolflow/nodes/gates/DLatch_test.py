@@ -6,7 +6,7 @@ from pycontrolflow.nodes.gates.DLatch import DLatch
 
 
 class Test(unittest.TestCase):
-    def test1(self):
+    def test1(self) -> None:
         executor = FlowExecutor()
 
         var_d = executor.memory("var_d", bool)
@@ -14,10 +14,10 @@ class Test(unittest.TestCase):
         var_out = executor.var("out", bool)
 
         executor.add([
-            DLatch(var_d, var_e, initial_state=False).to(var_out)
+            DLatch[bool](var_d, var_e, initial_state=False).to(var_out)
         ])
 
-        def tick(value, enable, expected_value):
+        def tick(value: bool, enable: bool, expected_value: bool) -> None:
             var_d.set(value)
             var_e.set(enable)
             executor.run(datetime.now())

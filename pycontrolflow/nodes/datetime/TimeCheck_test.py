@@ -6,7 +6,7 @@ from pycontrolflow.nodes.datetime.TimeCheck import TimeCheck
 
 
 class TimeCheckTest(unittest.TestCase):
-    def test1(self):
+    def test1(self) -> None:
         executor = FlowExecutor()
 
         var1 = executor.var("var1", bool)
@@ -21,7 +21,7 @@ class TimeCheckTest(unittest.TestCase):
         executor.run(datetime(2020, 1, 1, 17, 00))
         self.assertFalse(var1.get())
 
-    def test1_cross(self):
+    def test1_cross(self) -> None:
         executor = FlowExecutor()
 
         var1 = executor.var("var1", bool)
