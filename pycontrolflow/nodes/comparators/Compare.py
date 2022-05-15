@@ -9,7 +9,7 @@ from pycontrolflow.types import TNodeInput, TComparable
 TValue = TypeVar("TValue")
 
 
-class Comparer(FlowSingleOutputNode[bool]):
+class Comparer(FlowSingleOutputNode[bool], Generic[TValue]):
     def __init__(self,
                  input1: TNodeInput[TValue],
                  input2: TNodeInput[TValue],
@@ -45,21 +45,21 @@ class Comparer(FlowSingleOutputNode[bool]):
         self.set_output(state)
 
 
-class CompareGreaterThan(Comparer, Generic[TComparable]):
+class CompareGreaterThan(Comparer[TComparable], Generic[TComparable]):
     def __init__(self, input1: TNodeInput[TComparable], input2: TNodeInput[TComparable], invert: bool = False) -> None:
         super().__init__(input1, input2, invert, lambda a, b: a > b)
 
 
-class CompareGreaterEqualTo(Comparer, Generic[TComparable]):
+class CompareGreaterEqualTo(Comparer[TComparable], Generic[TComparable]):
     def __init__(self, input1: TNodeInput[TComparable], input2: TNodeInput[TComparable], invert: bool = False) -> None:
         super().__init__(input1, input2, invert, lambda a, b: not a < b)
 
 
-class CompareLessThan(Comparer, Generic[TComparable]):
+class CompareLessThan(Comparer[TComparable], Generic[TComparable]):
     def __init__(self, input1: TNodeInput[TComparable], input2: TNodeInput[TComparable], invert: bool = False) -> None:
         super().__init__(input1, input2, invert, lambda a, b: a < b)
 
 
-class CompareLessEqualTo(Comparer, Generic[TComparable]):
+class CompareLessEqualTo(Comparer[TComparable], Generic[TComparable]):
     def __init__(self, input1: TNodeInput[TComparable], input2: TNodeInput[TComparable], invert: bool = False) -> None:
         super().__init__(input1, input2, invert, lambda a, b: not a > b)

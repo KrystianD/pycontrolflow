@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from typing import Any, TypeVar, Optional, Tuple, List
+from typing import Any, TypeVar, Optional, Tuple, List, Generic
 
 from pycontrolflow.flow_value import FlowValue, resolve_value
 from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
@@ -8,7 +8,7 @@ from pycontrolflow.types import TNodeInput
 TOutput = TypeVar("TOutput")
 
 
-class Select(FlowSingleOutputNode[TOutput]):
+class Select(FlowSingleOutputNode[TOutput], Generic[TOutput]):
     def __init__(self) -> None:
         super().__init__([])
 

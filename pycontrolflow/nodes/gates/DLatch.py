@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from typing import Optional, TypeVar
+from typing import Optional, TypeVar, Generic
 
 from pycontrolflow.flow_value import wrap_input
 from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
@@ -8,7 +8,7 @@ from pycontrolflow.types import TNodeInput
 TValue = TypeVar("TValue")
 
 
-class DLatch(FlowSingleOutputNode[TValue]):
+class DLatch(FlowSingleOutputNode[TValue], Generic[TValue]):
     def __init__(self,
                  value: TNodeInput[TValue],
                  enable: TNodeInput[bool],

@@ -36,11 +36,3 @@ class PreviousStateCondition(FlowSingleOutputNode[TOutput], Generic[TInput, TOut
     @abstractmethod
     def process_values(self, prev_value: TInput, cur_value: TInput) -> TOutput:
         pass
-
-    @classmethod
-    def _get_input_type(cls) -> Type[TInput]:
-        return typing.get_args(cls.__orig_bases__[0])[0]  # type: ignore
-
-    @classmethod
-    def _get_output_type(cls) -> Type[TOutput]:
-        return typing.get_args(cls.__orig_bases__[0])[1]  # type: ignore
