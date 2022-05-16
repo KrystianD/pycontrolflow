@@ -1,7 +1,7 @@
 import datetime
 import logging
 from abc import abstractmethod
-from typing import Type, Any, TypeVar, Optional, Generic, Union, cast, Sequence, List
+from typing import Type, Any, TypeVar, Optional, Generic, Union, cast, Sequence, List, Iterable
 
 import isodate
 
@@ -102,6 +102,10 @@ def wrap_input(input_: TNodeInput[TValue]) -> IFlowValueProvider[TValue]:
         return input_
     else:
         return ConstantFlowValueProvider(input_)
+
+
+def wrap_inputs(input_: Iterable[TNodeInput[TValue]]) -> List[IFlowValueProvider[TValue]]:
+    return [wrap_input(x) for x in input_]
 
 
 def wrap_input_check_type(input_: TNodeInput[TValue], expected_type: Type[TValue]) -> IFlowValueProvider[TValue]:

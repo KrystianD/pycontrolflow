@@ -6,7 +6,7 @@ from pycontrolflow.nodes.FlowNode import FlowNode
 
 class Clear(FlowNode):
     def __init__(self, output_name: FlowValue[bool]) -> None:
-        super().__init__()
+        super().__init__([])
         self.output_name = output_name
 
     def process(self, cur_date: datetime, delta: timedelta) -> None:

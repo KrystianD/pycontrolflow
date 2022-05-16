@@ -14,7 +14,7 @@ class TransformTest(unittest.TestCase):
         out = executor.var("out", int)
 
         executor.add([
-            Transform[int](lambda vals: sum(x for x in vals), var1, var2).to(out),
+            Transform[int](lambda vals: sum(vals), var1, var2).to(out),
         ])
 
         var1.set(1)

@@ -18,6 +18,3 @@ class TimeCheck(FlowSingleOutputNode[bool]):
             self.set_output(self.start_time <= cur_date.time() <= self.end_time)
         else:
             self.set_output(self.start_time <= cur_date.time() or cur_date.time() <= self.end_time)
-
-    def _get_output_type(self):
-        return bool

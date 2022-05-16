@@ -1,6 +1,6 @@
 import typing
-from abc import ABC, abstractmethod
-from typing import TypeVar, Optional, Any, Type, Sequence
+from abc import ABC
+from typing import TypeVar, Optional, Any, Type, Sequence, cast
 
 from pycontrolflow import type_utils
 from pycontrolflow.IFlowValueProvider import IFlowValueProvider
@@ -42,5 +42,6 @@ class FlowSingleOutputNode(FlowNode, IFlowValueProvider[TFlowSingleOutputNodeTyp
                 return typing.get_args(v)[0]  # type: ignore
         assert False
 
-    def _get_output_type(self):
-        return type_utils.get_generic_args_for_obj(self, FlowSingleOutputNode)[0]
+    def _get_output_type(self) -> Type[TFlowSingleOutputNodeType]:
+        types = type_utils.get_generic_args_for_obj(self, FlowSingleOutputNode)
+        return cast(Type[TFlowSingleOutputNodeType], types[0])

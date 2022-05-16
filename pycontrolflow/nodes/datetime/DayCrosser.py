@@ -33,6 +33,3 @@ class DayCrosser(FlowSingleOutputNode[bool]):
         self.set_output(self.prev_date.get_notnull() < date_point <= cur_date)
 
         self.prev_date.set(cur_date)
-
-    def _get_output_type(self):
-        return bool

@@ -6,7 +6,7 @@ from pycontrolflow.nodes.FlowNode import FlowNode
 
 class TriggerStop(FlowNode):
     def __init__(self, timer: FlowTimerOneShot) -> None:
-        super().__init__()
+        super().__init__([])
         self.timer = timer
 
     def process(self, cur_date: datetime, delta: timedelta) -> None:

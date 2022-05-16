@@ -1,5 +1,5 @@
 import typing
-from typing import Type, Any, Optional, TypeVar
+from typing import Type, Any, Optional, TypeVar, Dict, List
 
 T = TypeVar("T")
 
@@ -22,7 +22,7 @@ def is_same_type(type1: Type[Any], type2: Type[Any]) -> bool:
     return type1 == type2
 
 
-def _get_generic_args_internal(typing_obj: Any, expected_class: Any, args_map=None) -> Optional[typing.List[Any]]:
+def _get_generic_args_internal(typing_obj: Any, expected_class: Any, args_map: Optional[Dict[Any, Any]] = None) -> Optional[List[Any]]:
     if args_map is None:
         args_map = {}
 
@@ -30,8 +30,7 @@ def _get_generic_args_internal(typing_obj: Any, expected_class: Any, args_map=No
     if obj is None:
         return None
 
-    class_args = typing.get_args(typing_obj)
-    class_args = [args_map.get(x, x) for x in class_args]
+    class_args = [args_map.get(x, x) for x in typing.get_args(typing_obj)]  # get args and replace with passed mapping if exists
 
     if obj == expected_class:
         return class_args
@@ -60,9 +59,12 @@ def _get_generic_args_internal(typing_obj: Any, expected_class: Any, args_map=No
     return None
 
 
-def get_generic_args_for_obj(obj: Any, expected_class: Any) -> Optional[typing.List[Any]]:
+def get_generic_args_for_obj(obj: Any, expected_class: Any) -> List[Any]:
     typing_cls = getattr(obj, "__orig_class__", obj)
-    return _get_generic_args_internal(typing_cls, expected_class, {})
+    res = _get_generic_args_internal(typing_cls, expected_class, {})
+    if res is None:
+        raise TypeError("no generic type")
+    return res
 
 
 __all__ = [

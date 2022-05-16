@@ -11,7 +11,7 @@ TInputParams = TNodeInput[Any]
 
 
 class Transform(FlowSingleOutputNode[TOutput], Generic[TOutput]):
-    def __init__(self, transformer_cb: Callable[[List[TInputParams]], TOutput], *input_values: TInputParams) -> None:
+    def __init__(self, transformer_cb: Callable[[List[Any]], TOutput], *input_values: TInputParams) -> None:
         self.input_values = [wrap_input(x) for x in input_values]
 
         super().__init__(self.input_values)

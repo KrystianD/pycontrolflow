@@ -15,9 +15,9 @@ T = TypeVar("T")
 
 
 class FlowNode:
-    def __init__(self, providers: Sequence[IFlowValueProvider], nid: Optional[str] = None) -> None:
+    def __init__(self, providers: Sequence[IFlowValueProvider[Any]], nid: Optional[str] = None) -> None:
         self.nid = nid
-        self.providers: Sequence[IFlowValueProvider] = providers
+        self.providers: Sequence[IFlowValueProvider[Any]] = providers
         self.flow_executor: 'FlowExecutor' = None  # type: ignore
 
         self.subflows: List['Flow'] = []
