@@ -13,7 +13,7 @@ TComparable = TypeVar('TComparable', bound=Comparable)
 
 TValue = TypeVar("TValue")
 
-TNodeInput = Union[TValue, IFlowValueProvider[TValue]]
+TNodeInput = Union[IFlowValueProvider[TValue], TValue]
 TNodeInputs = Iterable[TNodeInput[TValue]]
 
 __all__ = [
