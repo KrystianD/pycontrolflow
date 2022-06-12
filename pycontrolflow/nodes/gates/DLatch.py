@@ -12,7 +12,7 @@ class DLatch(FlowSingleOutputNode[TValue], Generic[TValue]):
     def __init__(self,
                  value: TNodeInput[TValue],
                  enable: TNodeInput[bool],
-                 initial_state: Optional[TValue] = None,
+                 initial_state: TValue,
                  nid: Optional[str] = None, persistent: bool = False) -> None:
         self._value = wrap_input(value)
         self._enable = wrap_input(enable)
@@ -25,7 +25,8 @@ class DLatch(FlowSingleOutputNode[TValue], Generic[TValue]):
 
     def setup(self) -> None:
         super().setup()
-        self._value_mem = self._create_memory("state", self._value.get_type(), self._initial_state, self._persistent)
+        self._value_mem = self._create_memory("state", self._value.get_type(), self._initial_state,
+                                              self._persistent)
 
     def process(self, cur_date: datetime, delta: timedelta) -> None:
         super().process(cur_date, delta)

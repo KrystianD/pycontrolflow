@@ -12,7 +12,7 @@ class DFlipFlop(FlowSingleOutputNode[TValue], Generic[TValue]):
     def __init__(self,
                  value: TNodeInput[TValue],
                  clock: TNodeInput[bool],
-                 initial_state: Optional[TValue] = None,
+                 initial_state: TValue,
                  nid: Optional[str] = None, persistent: bool = False) -> None:
         self._value = wrap_input(value)
         self._clock = wrap_input(clock)
@@ -26,7 +26,8 @@ class DFlipFlop(FlowSingleOutputNode[TValue], Generic[TValue]):
 
     def setup(self) -> None:
         super().setup()
-        self._value_mem = self._create_memory("value", self._value.get_type(), self._initial_state, self._persistent)
+        self._value_mem = self._create_memory("value", self._value.get_type(), self._initial_state,
+                                              self._persistent)
         self._clock_mem = self._create_memory("clock", bool, False, self._persistent)
 
     def process(self, cur_date: datetime, delta: timedelta) -> None:
