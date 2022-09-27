@@ -14,7 +14,7 @@ TValue = TypeVar("TValue")
 logger = logging.getLogger("controlflow")
 
 
-def format_value_for_debug(value: TValue):
+def format_value_for_debug(value: TValue) -> str:
     if isinstance(value, float):
         return f"{value:.3f}"
     else:
