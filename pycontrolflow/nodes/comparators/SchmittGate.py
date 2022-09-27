@@ -7,13 +7,18 @@ from pycontrolflow.types import TNodeInput
 
 
 class SchmittGate(FlowSingleOutputNode[bool]):
-    def __init__(self, input_: TNodeInput[float], low_value: float, high_value: float, initial: bool = False, invert: bool = False, nid: Optional[str] = None,
+    def __init__(self, input_: TNodeInput[float], low_value: TNodeInput[float], high_value: TNodeInput[float],
+                 initial: bool = False, invert: bool = False, nid: Optional[str] = None,
                  persistent: bool = False) -> None:
         input_wrap = wrap_input(input_)
+        low_value_wrap = wrap_input(low_value)
+        high_value_wrap = wrap_input(high_value)
+
         super().__init__([input_wrap], nid=nid)
+
         self.input_ = input_wrap
-        self.low_value = low_value
-        self.high_value = high_value
+        self.low_value = low_value_wrap
+        self.high_value = high_value_wrap
         self.initial = initial
         self.invert = invert
         self.persistent = persistent
@@ -33,9 +38,9 @@ class SchmittGate(FlowSingleOutputNode[bool]):
         super().process(cur_date, delta)
         value = self.input_.get_notnull()
 
-        if value > self.high_value:
+        if value > self.high_value.get_notnull():
             self.state.set(True)
-        elif value < self.low_value:
+        elif value < self.low_value.get_notnull():
             self.state.set(False)
 
         cur_state = self.state.get_notnull()
