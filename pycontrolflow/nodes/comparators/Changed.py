@@ -1,5 +1,4 @@
-from abc import abstractmethod
-from typing import TypeVar, Optional, Type, Generic, Any
+from typing import TypeVar, Generic
 
 from pycontrolflow.nodes.comparators.PreviousStateCondition import PreviousStateCondition
 from pycontrolflow.types import TNodeInput
