@@ -14,6 +14,13 @@ TValue = TypeVar("TValue")
 logger = logging.getLogger("controlflow")
 
 
+def format_value_for_debug(value: TValue):
+    if isinstance(value, float):
+        return f"{value:.3f}"
+    else:
+        return str(value)
+
+
 class FlowValue(Generic[TValue], IFlowValueProvider[TValue]):
     def __init__(self, name: str, value_type: Type[TValue], default: TValue) -> None:
         self.name = name
@@ -28,7 +35,7 @@ class FlowValue(Generic[TValue], IFlowValueProvider[TValue]):
         value = implicit_cast(value, self.type)
 
         if not self.name.startswith(("_tmp_node.", "_tmp.")):
-            logger.debug(f"/{self.name}/ set to /{value}/")
+            logger.debug(f"/{self.name}/ set to /{format_value_for_debug(value)}/")
             pass
         self._value = value
 
