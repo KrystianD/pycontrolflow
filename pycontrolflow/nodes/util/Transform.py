@@ -21,6 +21,6 @@ class Transform(FlowSingleOutputNode[TOutput], Generic[TOutput]):
     def process(self, cur_date: datetime, delta: timedelta) -> None:
         super().process(cur_date, delta)
 
-        output = self.transformer_cb([x.get_notnull() for x in self.input_values])
+        output = self.transformer_cb(*[x.get_notnull() for x in self.input_values])
 
         self.set_output(output)
