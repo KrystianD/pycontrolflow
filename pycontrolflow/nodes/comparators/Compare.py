@@ -35,7 +35,6 @@ class Comparer(FlowSingleOutputNode[bool], Generic[TValue]):
         super().process(cur_date, delta)
         value1 = self._input1.get_notnull()
         value2 = self._input2.get_notnull()
-        assert type(value1) == type(value2)
 
         state = self._op(value1, value2)
 
