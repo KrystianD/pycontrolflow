@@ -4,7 +4,7 @@ from pycontrolflow.FlowTimerOneShot import FlowTimerOneShot
 from pycontrolflow.nodes.FlowNode import FlowNode
 
 
-class TriggerStop(FlowNode):
+class TimerStop(FlowNode):
     def __init__(self, timer: FlowTimerOneShot) -> None:
         super().__init__([])
         self.timer = timer
