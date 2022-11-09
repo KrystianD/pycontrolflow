@@ -11,7 +11,7 @@ class FlowTimerRepeating(FlowTimer):
         self.interval = interval
 
         self._timer = timedelta()
-        self.elapsed = FlowVariable(name + ".elapsed", bool, False)
+        self.elapsed = FlowVariable(flow_executor, name + ".elapsed", bool, False)
 
     def start_cycle(self) -> None:
         self.elapsed.set(False)
