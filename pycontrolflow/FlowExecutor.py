@@ -106,7 +106,8 @@ class FlowExecutor:
         path = f"_tmp_node.{random_string(10)}.{name}"
         return self.var(path, var_type, default)
 
-    def _memory_for_node(self, nid: Optional[str], name: str, var_type: Type[T], initial_value: T, persistent: bool = False) -> FlowMemoryCell[T]:
+    def _memory_for_node(self, nid: Optional[str], name: str, var_type: Type[T], initial_value: T,
+                         persistent: bool = False) -> FlowMemoryCell[T]:
         if persistent:
             if nid is None:
                 raise Exception("can't create persistent memory cell without node id (nid)")

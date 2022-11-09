@@ -118,7 +118,8 @@ def wrap_inputs(input_: Iterable[TNodeInput[TValue]]) -> List[IFlowValueProvider
 def wrap_input_check_type(input_: TNodeInput[TValue], expected_type: Type[TValue]) -> IFlowValueProvider[TValue]:
     wrapped = wrap_input(input_)
     if wrapped.get_type() != expected_type:
-        raise TypeError(f"input type does not match expected type, got: {wrapped.get_type()}, expected: {expected_type}")
+        raise TypeError(
+            f"input type does not match expected type, got: {wrapped.get_type()}, expected: {expected_type}")
     return wrapped
 
 
