@@ -2,10 +2,10 @@ import unittest
 from datetime import datetime, timedelta
 
 from pycontrolflow.FlowExecutor import FlowExecutor
-from pycontrolflow.nodes.timers.CountingTimer import CountingTimer
+from pycontrolflow.nodes.timers.TimerOnDelay import TimerOnDelay
 
 
-class CountingTimerTest(unittest.TestCase):
+class TimerOnDelayTest(unittest.TestCase):
     def test1(self) -> None:
         executor = FlowExecutor()
 
@@ -13,7 +13,7 @@ class CountingTimerTest(unittest.TestCase):
         out = executor.var("out", bool)
 
         executor.add([
-            CountingTimer(var, timedelta(seconds=7)).to(out),
+            TimerOnDelay(var, timedelta(seconds=7)).to(out),
         ])
 
         var.set(True)

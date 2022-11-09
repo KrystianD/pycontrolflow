@@ -6,7 +6,7 @@ from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
 from pycontrolflow.types import TNodeInput
 
 
-class CountingTimer(FlowSingleOutputNode[bool]):
+class TimerOnDelay(FlowSingleOutputNode[bool]):
     def __init__(self, input_value: TNodeInput[bool], time: timedelta) -> None:
         self._input_value = wrap_input(input_value)
 
