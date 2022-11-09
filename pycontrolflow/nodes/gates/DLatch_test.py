@@ -34,7 +34,3 @@ class Test(unittest.TestCase):
         tick(value=False, enable=True, expected_value=False)
         tick(value=True, enable=True, expected_value=True)
         tick(value=False, enable=True, expected_value=False)
-
-
-if __name__ == '__main__':
-    unittest.main()

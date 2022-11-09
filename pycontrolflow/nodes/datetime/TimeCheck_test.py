@@ -41,7 +41,3 @@ class TimeCheckTest(unittest.TestCase):
 
         executor.run(datetime(2020, 1, 1, 6, 00))
         self.assertFalse(var1.get())
-
-
-if __name__ == '__main__':
-    unittest.main()

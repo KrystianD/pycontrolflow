@@ -62,7 +62,3 @@ class DayCrosserTest(unittest.TestCase):
         # print(executor.serialize_state())
 
         self.assertEqual('{"_node.dc.date": "2020-01-02T09:00:00"}', json.dumps(state))
-
-
-if __name__ == '__main__':
-    unittest.main()

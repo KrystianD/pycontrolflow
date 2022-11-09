@@ -16,10 +16,10 @@ class Test(unittest.TestCase):
 
         executor.add([
             Select[int]()
-                .case(cond1, 10)
-                .case(cond2, 20)
-                .default(30)
-                .to(var_out)
+            .case(cond1, 10)
+            .case(cond2, 20)
+            .default(30)
+            .to(var_out)
         ])
 
         cond1.set(True)
@@ -49,10 +49,10 @@ class Test(unittest.TestCase):
 
         executor.add([
             Select[int]()
-                .case(cond1, value1)
-                .case(cond2, value2)
-                .default(value_def)
-                .to(var_out)
+            .case(cond1, value1)
+            .case(cond2, value2)
+            .default(value_def)
+            .to(var_out)
         ])
 
         value1.set(10)
@@ -73,7 +73,3 @@ class Test(unittest.TestCase):
         cond2.set(False)
         executor.run(datetime.now())
         self.assertEqual(30, var_out.get())
-
-
-if __name__ == '__main__':
-    unittest.main()

@@ -38,7 +38,3 @@ class MoveTest(unittest.TestCase):
         executor.run(datetime.now())
         self.assertEqual(5, var1.get())
         self.assertEqual(5, var2.get())
-
-
-if __name__ == '__main__':
-    unittest.main()

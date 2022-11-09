@@ -21,7 +21,3 @@ class TransformTest(unittest.TestCase):
         var2.set(2)
         executor.run(datetime(2020, 1, 1, 15, 0, 00))
         self.assertEqual(3, out.get())
-
-
-if __name__ == '__main__':
-    unittest.main()

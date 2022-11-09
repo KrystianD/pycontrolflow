@@ -27,7 +27,3 @@ class ChangedTest(unittest.TestCase):
         in1.set(2)
         executor.run(datetime(2020, 1, 1, 15, 2, 00))
         self.assertTrue(out.get())
-
-
-if __name__ == '__main__':
-    unittest.main()

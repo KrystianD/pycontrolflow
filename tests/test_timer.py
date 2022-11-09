@@ -79,7 +79,3 @@ class TimerTest(unittest.TestCase):
         executor.run(datetime(2020, 1, 1, 15, 0, 30))
         self.assertFalse(t1.enabled.get())
         self.assertEqual(timedelta(seconds=10), t1.timer.get())
-
-
-if __name__ == '__main__':
-    unittest.main()

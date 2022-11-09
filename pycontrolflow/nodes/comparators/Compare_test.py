@@ -20,7 +20,3 @@ class CompareTest(unittest.TestCase):
         executor.run(datetime(2020, 1, 1, 15, 0, 00))
 
         self.assertFalse(out.get())
-
-
-if __name__ == '__main__':
-    unittest.main()

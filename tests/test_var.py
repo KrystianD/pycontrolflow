@@ -18,7 +18,3 @@ class VarTest(unittest.TestCase):
         executor.run(datetime(2020, 1, 1))
 
         self.assertEqual(10, var1.get())
-
-
-if __name__ == '__main__':
-    unittest.main()

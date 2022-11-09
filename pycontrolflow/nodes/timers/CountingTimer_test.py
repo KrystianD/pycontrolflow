@@ -43,7 +43,3 @@ class CountingTimerTest(unittest.TestCase):
         var.set(True)
         executor.run(datetime(2020, 1, 1, 15, 0, 35))
         self.assertTrue(out.get())
-
-
-if __name__ == '__main__':
-    unittest.main()
