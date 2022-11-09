@@ -1,12 +1,12 @@
-from abc import ABCMeta, abstractmethod
-from typing import Union, Iterable, Any, TypeVar, Optional
+from abc import abstractmethod
+from typing import Union, Iterable, TypeVar, Protocol
 
 from pycontrolflow.IFlowValueProvider import IFlowValueProvider
 
 
-class Comparable(metaclass=ABCMeta):
+class Comparable(Protocol):
     @abstractmethod
-    def __lt__(self, other: Any) -> bool: ...
+    def __lt__(self: 'TComparable', other: 'TComparable') -> bool: ...
 
 
 TComparable = TypeVar('TComparable', bound=Comparable)
