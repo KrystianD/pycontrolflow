@@ -98,6 +98,11 @@ class FlowVariable(FlowValue[TValue]):
     def start_cycle(self) -> None:
         self._value = self.default
 
+    def set(self, value: Optional[TValue]) -> None:
+        if not self._executor._is_executing:
+            raise Exception("variables can't be set outside of the flow")
+        super().set(value)
+
 
 class FlowMemoryCell(FlowValue[TValue]):
     def __init__(self, executor: 'FlowExecutor', name: str, value_type: Type[TValue], default: Any,

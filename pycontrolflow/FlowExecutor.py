@@ -25,6 +25,8 @@ class FlowExecutor:
 
         self._prev_timestamp: Optional[datetime] = None
 
+        self._is_executing = False
+
     def set_value(self, name: str, value: Any) -> None:
         self._values[name].set(value)
 
@@ -57,24 +59,29 @@ class FlowExecutor:
         delta = timestamp - self._prev_timestamp
         self._prev_timestamp = timestamp
 
-        # start new cycle
-        for item in self._values.values():
-            if isinstance(item, FlowVariable):
-                item.start_cycle()
-        for timer in self._timers.values():
-            timer.start_cycle()
+        try:
+            self._is_executing = True
 
-        # process timers
-        for timer in self._timers.values():
-            timer.process(delta)
+            # start new cycle
+            for item in self._values.values():
+                if isinstance(item, FlowVariable):
+                    item.start_cycle()
+            for timer in self._timers.values():
+                timer.start_cycle()
 
-        # process lines
-        for line in self._flow.items:
-            line.process(timestamp, delta)
+            # process timers
+            for timer in self._timers.values():
+                timer.process(delta)
 
-        # process timers after
-        for timer in self._timers.values():
-            timer.process_after()
+            # process lines
+            for line in self._flow.items:
+                line.process(timestamp, delta)
+
+            # process timers after
+            for timer in self._timers.values():
+                timer.process_after()
+        finally:
+            self._is_executing = False
 
     def reset_state(self) -> None:
         for line in self._flow.items:
