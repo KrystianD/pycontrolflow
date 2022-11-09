@@ -2,10 +2,10 @@ import unittest
 from datetime import datetime
 
 from pycontrolflow.FlowExecutor import FlowExecutor
-from pycontrolflow.nodes.comparators.EdgeFalling import EdgeFalling
+from pycontrolflow.nodes.comparators.EdgeRising import EdgeRising
 
 
-class EdgeFallingTest(unittest.TestCase):
+class EdgeRisingTest(unittest.TestCase):
     def test(self) -> None:
         executor = FlowExecutor()
 
@@ -13,7 +13,7 @@ class EdgeFallingTest(unittest.TestCase):
         out = executor.var("out", bool)
 
         executor.add([
-            EdgeFalling(in1).to(out),
+            EdgeRising(in1).to(out),
         ])
 
         in1.set(False)
@@ -22,8 +22,8 @@ class EdgeFallingTest(unittest.TestCase):
 
         in1.set(True)
         executor.run(datetime(2020, 1, 1, 15, 1, 00))
-        self.assertFalse(out.get())
+        self.assertTrue(out.get())
 
         in1.set(False)
         executor.run(datetime(2020, 1, 1, 15, 1, 00))
-        self.assertTrue(out.get())
+        self.assertFalse(out.get())
