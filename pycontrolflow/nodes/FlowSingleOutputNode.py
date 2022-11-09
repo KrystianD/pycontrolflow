@@ -9,7 +9,7 @@ from pycontrolflow.nodes.FlowNode import FlowNode
 TFlowSingleOutputNodeType = TypeVar("TFlowSingleOutputNodeType")
 
 
-class FlowSingleOutputNode(Generic[TFlowSingleOutputNodeType], FlowNode, IFlowValueProvider, ABC):
+class FlowSingleOutputNode(Generic[TFlowSingleOutputNodeType], FlowNode, IFlowValueProvider[TFlowSingleOutputNodeType], ABC):
     def __init__(self, providers: Optional[Iterable[Any]] = None, nid: Optional[str] = None) -> None:
         super().__init__(providers, nid=nid)
         self.output_value: Optional[FlowValue[TFlowSingleOutputNodeType]] = None

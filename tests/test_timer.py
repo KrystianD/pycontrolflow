@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from pycontrolflow.FlowExecutor import FlowExecutor
 from pycontrolflow.nodes.timers.TriggerTimer import TriggerTimer
 from pycontrolflow.nodes.flow_control.If import If
+from pycontrolflow.nodes.values.Move import Move
 
 
 class TimerTest(unittest.TestCase):
@@ -14,9 +15,10 @@ class TimerTest(unittest.TestCase):
         t1 = executor.timer_one_shot("t1", "10s", extend_on_trigger=False)
 
         executor.add([
-            If(var1, [
-                TriggerTimer(t1),
-            ])
+            Move(var1, t1.trigger),
+            # If(var1, [
+            #     TriggerTimer(t1),
+            # ])
         ])
 
         executor.run(datetime(2020, 1, 1, 15, 0, 0))
@@ -46,9 +48,10 @@ class TimerTest(unittest.TestCase):
         t1 = executor.timer_one_shot("t1", "10s", extend_on_trigger=True)
 
         executor.add([
-            If(var1, [
-                TriggerTimer(t1),
-            ])
+            Move(var1, t1.trigger),
+            # If(var1, [
+            #     TriggerTimer(t1),
+            # ])
         ])
 
         executor.run(datetime(2020, 1, 1, 15, 0, 0))

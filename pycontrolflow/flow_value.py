@@ -5,11 +5,12 @@ from typing import Type, Any, TypeVar, Optional, Generic, Union, cast
 import isodate
 
 from pycontrolflow.IFlowValueProvider import IFlowValueProvider
+from pycontrolflow.types import TNodeInput
 
 TValue = TypeVar("TValue")
 
 
-class FlowValue(Generic[TValue], IFlowValueProvider):
+class FlowValue(Generic[TValue], IFlowValueProvider[TValue]):
     def __init__(self, name: str, value_type: Type[TValue], default: Optional[TValue]) -> None:
         self.name = name
         self.type = value_type
@@ -84,3 +85,10 @@ class FlowMemoryCell(FlowValue[TValue]):
 
     def start_cycle(self) -> None:
         pass
+
+
+def resolve_value(value: TNodeInput[TValue]) -> Optional[TValue]:
+    if isinstance(value, IFlowValueProvider):
+        return value.get()
+    else:
+        return value

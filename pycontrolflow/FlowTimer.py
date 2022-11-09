@@ -13,3 +13,7 @@ class FlowTimer:
     @abstractmethod
     def process(self, delta: timedelta) -> None:
         pass
+
+    @abstractmethod
+    def process_after(self) -> None:
+        pass

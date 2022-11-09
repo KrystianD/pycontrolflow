@@ -6,7 +6,7 @@ from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
 
 
 class LogicOp(FlowSingleOutputNode[bool]):
-    def __init__(self, input_values: Iterable[IFlowValueProvider], op: Callable[[List[bool]], bool]) -> None:
+    def __init__(self, input_values: Iterable[IFlowValueProvider[bool]], op: Callable[[List[bool]], bool]) -> None:
         super().__init__(input_values)
         self.input_values = input_values
         self.op = op

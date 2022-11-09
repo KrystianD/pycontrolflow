@@ -7,7 +7,7 @@ from pycontrolflow.Flow import Flow
 
 
 class If(FlowNode):
-    def __init__(self, condition: IFlowValueProvider, if_flow: Union[Flow, List[FlowNode]], else_flow: Optional[Union[Flow, List[FlowNode]]] = None) -> None:
+    def __init__(self, condition: IFlowValueProvider[bool], if_flow: Union[Flow, List[FlowNode]], else_flow: Optional[Union[Flow, List[FlowNode]]] = None) -> None:
         super().__init__([condition])
         self.condition = condition
         self.if_flow = if_flow if isinstance(if_flow, Flow) else Flow.create(*if_flow)

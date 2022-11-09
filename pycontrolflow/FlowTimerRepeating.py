@@ -22,3 +22,6 @@ class FlowTimerRepeating(FlowTimer):
         if self._timer > self.interval:
             self.elapsed.set(True)
             self._timer = timedelta()
+
+    def process_after(self) -> None:
+        pass

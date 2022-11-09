@@ -4,7 +4,7 @@ from typing import Dict, Any, List, Type, TypeVar, Optional, Union, TYPE_CHECKIN
 from pycontrolflow.date_utils import parse_timedelta
 from pycontrolflow.flow_value import FlowValue, FlowVariable, FlowMemoryCell
 from pycontrolflow.FlowTimer import FlowTimer
-from pycontrolflow.main import random_string
+from pycontrolflow.string_utils import random_string
 from pycontrolflow.nodes.FlowNode import FlowNode
 from pycontrolflow.Flow import Flow
 
@@ -73,6 +73,10 @@ class FlowExecutor:
         for line in self._flow.items:
             line.process(timestamp, delta)
 
+        # process timers after
+        for timer in self._timers.values():
+            timer.process_after()
+
     def reset_state(self) -> None:
         for line in self._flow.items:
             line.reset_state()
@@ -98,6 +102,10 @@ class FlowExecutor:
         obj = FlowTimerRepeating(self, name, parse_timedelta(interval))
         self._timers[name] = obj
         return obj
+
+    def _var_for_node(self, nid: Optional[str], name: str, var_type: Type[T], default: Any = None) -> FlowVariable[T]:
+        path = f"_tmp_node.{random_string(10)}.{name}"
+        return self.var(path, var_type, default)
 
     def _memory_for_node(self, nid: Optional[str], name: str, var_type: Type[T], default: Any = None, persistent: bool = False) -> FlowMemoryCell[T]:
         if persistent:

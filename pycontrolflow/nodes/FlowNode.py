@@ -2,7 +2,7 @@ from datetime import timedelta, datetime
 from typing import Iterable, List, Optional, TYPE_CHECKING, Type, Any, TypeVar
 
 from pycontrolflow.flow_value import FlowMemoryCell
-from pycontrolflow.main import random_string
+from pycontrolflow.string_utils import random_string
 from pycontrolflow.IFlowValueProvider import IFlowValueProvider
 
 if TYPE_CHECKING:

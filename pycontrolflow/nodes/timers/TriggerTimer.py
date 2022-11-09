@@ -11,4 +11,4 @@ class TriggerTimer(FlowNode):
 
     def process(self, cur_date: datetime, delta: timedelta) -> None:
         super().process(cur_date, delta)
-        self.timer.trigger()
+        self.timer._trigger()

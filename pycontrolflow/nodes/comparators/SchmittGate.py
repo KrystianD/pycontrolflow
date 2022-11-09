@@ -7,7 +7,7 @@ from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
 
 
 class SchmittGate(FlowSingleOutputNode[bool]):
-    def __init__(self, input_name: IFlowValueProvider, low_value: float, high_value: float, initial: bool = False, invert: bool = False, nid: Optional[str] = None,
+    def __init__(self, input_name: IFlowValueProvider[bool], low_value: float, high_value: float, initial: bool = False, invert: bool = False, nid: Optional[str] = None,
                  persistent: bool = False) -> None:
         super().__init__([input_name], nid=nid)
         self.input_name = input_name
