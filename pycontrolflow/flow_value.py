@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 
 TValue = TypeVar("TValue")
 
-logger = logging.getLogger("controlflow")
+logger = logging.getLogger("pycontrolflow")
 
 
 def format_value_for_debug(value: TValue) -> str:
