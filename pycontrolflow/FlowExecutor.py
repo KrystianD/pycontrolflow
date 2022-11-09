@@ -23,7 +23,7 @@ class FlowExecutor:
         self._values: Dict[str, FlowValue[Any]] = {}
         self._timers: Dict[str, FlowTimer] = {}
 
-        self.prev_timestamp: Optional[datetime] = None
+        self._prev_timestamp: Optional[datetime] = None
 
     def set_value(self, name: str, value: Any) -> None:
         self._values[name].set(value)
@@ -52,10 +52,10 @@ class FlowExecutor:
         self._flow.setup()
 
     def run(self, timestamp: datetime) -> None:
-        if self.prev_timestamp is None:
-            self.prev_timestamp = timestamp
-        delta = timestamp - self.prev_timestamp
-        self.prev_timestamp = timestamp
+        if self._prev_timestamp is None:
+            self._prev_timestamp = timestamp
+        delta = timestamp - self._prev_timestamp
+        self._prev_timestamp = timestamp
 
         # start new cycle
         for item in self._values.values():
