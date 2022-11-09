@@ -1,13 +1,16 @@
 import datetime
 import logging
 from abc import abstractmethod
-from typing import Type, Any, TypeVar, Optional, Generic, Union, cast, Sequence, List, Iterable
+from typing import Type, Any, TypeVar, Optional, Generic, Union, cast, Sequence, List, Iterable, TYPE_CHECKING
 
 import isodate
 
 from pycontrolflow.IFlowValueProvider import IFlowValueProvider, ConstantFlowValueProvider
 from pycontrolflow.type_utils import implicit_cast
 from pycontrolflow.types import TNodeInput, TNodeInputs
+
+if TYPE_CHECKING:
+    from pycontrolflow.FlowExecutor import FlowExecutor
 
 TValue = TypeVar("TValue")
 
@@ -22,7 +25,8 @@ def format_value_for_debug(value: TValue) -> str:
 
 
 class FlowValue(Generic[TValue], IFlowValueProvider[TValue]):
-    def __init__(self, name: str, value_type: Type[TValue], default: TValue) -> None:
+    def __init__(self, executor: 'FlowExecutor', name: str, value_type: Type[TValue], default: TValue) -> None:
+        self._executor = executor
         self.name = name
         self.type = value_type
         self.default = implicit_cast(default, self.type)
@@ -96,8 +100,9 @@ class FlowVariable(FlowValue[TValue]):
 
 
 class FlowMemoryCell(FlowValue[TValue]):
-    def __init__(self, name: str, value_type: Type[TValue], default: Any, persistent: bool) -> None:
-        super().__init__(name, value_type, default)
+    def __init__(self, executor: 'FlowExecutor', name: str, value_type: Type[TValue], default: Any,
+                 persistent: bool) -> None:
+        super().__init__(executor, name, value_type, default)
         self.persistent = persistent
 
     def start_cycle(self) -> None:

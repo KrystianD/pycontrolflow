@@ -81,12 +81,12 @@ class FlowExecutor:
             line.reset_state()
 
     def memory(self, name: str, var_type: Type[T], initial_value: T, persistent: bool = False) -> FlowMemoryCell[T]:
-        obj = FlowMemoryCell(name, var_type, initial_value, persistent=persistent)
+        obj = FlowMemoryCell(self, name, var_type, initial_value, persistent=persistent)
         self._values[name] = obj
         return obj
 
     def var(self, name: str, var_type: Type[T], default: Optional[T] = None) -> FlowVariable[T]:
-        obj = FlowVariable(name, var_type, default if default is not None else var_type())
+        obj = FlowVariable(self, name, var_type, default if default is not None else var_type())
         self._values[name] = obj
         return obj
 
