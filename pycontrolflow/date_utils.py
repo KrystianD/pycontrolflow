@@ -11,7 +11,8 @@ _timedelta_map = {
 }
 
 
-def parse_timedelta(x: Union[str, int, float, datetime.timedelta], default_multiplier: Optional[datetime.timedelta] = None) -> datetime.timedelta:
+def parse_timedelta(x: Union[str, int, float, datetime.timedelta],
+                    default_multiplier: Optional[datetime.timedelta] = None) -> datetime.timedelta:
     if isinstance(x, datetime.timedelta):
         return x
 

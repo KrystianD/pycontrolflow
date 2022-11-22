@@ -2,7 +2,6 @@ import unittest
 from datetime import datetime
 
 from pycontrolflow.FlowExecutor import FlowExecutor
-from pycontrolflow.nodes.gates.DLatch import DLatch
 from pycontrolflow.nodes.util.Select import Select
 
 

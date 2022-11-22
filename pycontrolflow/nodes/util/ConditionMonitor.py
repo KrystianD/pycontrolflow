@@ -6,7 +6,8 @@ from pycontrolflow.nodes.FlowNode import FlowNode
 
 
 class ConditionMonitor(FlowNode):
-    def __init__(self, input_name: FlowValue[bool], max_gap_time: timedelta, output_met: FlowValue[bool], output_met_time: FlowValue[timedelta], nid: Optional[str] = None,
+    def __init__(self, input_name: FlowValue[bool], max_gap_time: timedelta, output_met: FlowValue[bool],
+                 output_met_time: FlowValue[timedelta], nid: Optional[str] = None,
                  persistent: bool = False) -> None:
         super().__init__([input_name], nid=nid)
         self.input_name = input_name
@@ -22,7 +23,8 @@ class ConditionMonitor(FlowNode):
     def setup(self) -> None:
         super().setup()
         self.condition_met_start = self.flow_executor.memory("met_start", datetime, datetime.min, self.persistent)
-        self.last_condition_met_date = self.flow_executor.memory("last_met_date", datetime, datetime.min, self.persistent)
+        self.last_condition_met_date = self.flow_executor.memory("last_met_date", datetime, datetime.min,
+                                                                 self.persistent)
 
     def reset_state(self) -> None:
         super().reset_state()

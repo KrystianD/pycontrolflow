@@ -2,7 +2,6 @@ import unittest
 from datetime import datetime, timedelta
 
 from pycontrolflow.FlowExecutor import FlowExecutor
-from pycontrolflow.nodes.flow_control.If import If
 from pycontrolflow.nodes.values.Move import Move
 
 

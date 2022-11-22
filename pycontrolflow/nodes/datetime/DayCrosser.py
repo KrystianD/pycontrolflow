@@ -1,4 +1,3 @@
-from abc import abstractmethod
 from datetime import datetime, timedelta, time
 from typing import Union, Optional
 
@@ -8,7 +7,8 @@ from pycontrolflow.parse_utils import parse_time
 
 
 class DayCrosser(FlowSingleOutputNode[bool]):
-    def __init__(self, cross_time: Optional[Union[time, str]] = None, persistent: bool = False, nid: Optional[str] = None) -> None:
+    def __init__(self, cross_time: Optional[Union[time, str]] = None, persistent: bool = False,
+                 nid: Optional[str] = None) -> None:
         super().__init__([], nid=nid)
         self.cross_time = parse_time(cross_time) if cross_time is not None else time(0, 0, 0)
         self.persistent = persistent
@@ -28,7 +28,8 @@ class DayCrosser(FlowSingleOutputNode[bool]):
         if self.prev_date.get_notnull() == datetime.min:
             self.prev_date.set(cur_date)
 
-        date_point = cur_date.replace(hour=self.cross_time.hour, minute=self.cross_time.minute, second=self.cross_time.second)
+        date_point = cur_date.replace(hour=self.cross_time.hour, minute=self.cross_time.minute,
+                                      second=self.cross_time.second)
 
         self.set_output(self.prev_date.get_notnull() < date_point <= cur_date)
 

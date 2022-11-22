@@ -2,7 +2,6 @@ import unittest
 from datetime import datetime
 
 from pycontrolflow.FlowExecutor import FlowExecutor
-from pycontrolflow.nodes.gates.DFlipFlop import DFlipFlop
 from pycontrolflow.nodes.gates.SRLatch import SRLatch
 
 

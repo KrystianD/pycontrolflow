@@ -1,8 +1,8 @@
 from datetime import timedelta
 
 from pycontrolflow.FlowExecutor import FlowExecutor
-from pycontrolflow.flow_value import FlowVariable
 from pycontrolflow.FlowTimer import FlowTimer
+from pycontrolflow.flow_value import FlowVariable
 
 
 class FlowTimerRepeating(FlowTimer):

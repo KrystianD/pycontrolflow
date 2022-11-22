@@ -1,5 +1,5 @@
 from datetime import timedelta, datetime
-from typing import Iterable, List, Optional, TYPE_CHECKING, Type, Any, TypeVar, Sequence
+from typing import List, Optional, TYPE_CHECKING, Type, Any, TypeVar, Sequence
 
 from pycontrolflow.IFlowValueProvider import IFlowValueProvider
 from pycontrolflow.flow_value import FlowMemoryCell
@@ -34,8 +34,6 @@ class FlowNode:
 
     # called after flow executor injected dependencies
     def setup(self) -> None:
-        from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
-
         for provider in self.providers:
             self._register_provider(provider)
 
@@ -49,7 +47,8 @@ class FlowNode:
             if isinstance(provider, FlowNode):
                 provider.process(cur_date, delta)
 
-    def _create_memory(self, name: str, var_type: Type[T], initial_value: T, persistent: bool = False) -> FlowMemoryCell[T]:
+    def _create_memory(self, name: str, var_type: Type[T], initial_value: T, persistent: bool = False) -> \
+            FlowMemoryCell[T]:
         # noinspection PyProtectedMember
         return self.flow_executor._memory_for_node(self.nid, name, var_type, initial_value, persistent)
 

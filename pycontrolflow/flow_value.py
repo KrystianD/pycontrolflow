@@ -1,13 +1,13 @@
 import datetime
 import logging
 from abc import abstractmethod
-from typing import Type, Any, TypeVar, Optional, Generic, Union, cast, Sequence, List, Iterable, TYPE_CHECKING
+from typing import Type, Any, TypeVar, Optional, Generic, Union, cast, List, Iterable, TYPE_CHECKING
 
 import isodate
 
 from pycontrolflow.IFlowValueProvider import IFlowValueProvider, ConstantFlowValueProvider
 from pycontrolflow.type_utils import implicit_cast
-from pycontrolflow.types import TNodeInput, TNodeInputs
+from pycontrolflow.types import TNodeInput
 
 if TYPE_CHECKING:
     from pycontrolflow.FlowExecutor import FlowExecutor

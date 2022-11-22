@@ -1,7 +1,6 @@
-import typing
 from abc import abstractmethod
 from datetime import datetime, timedelta
-from typing import TypeVar, Generic, Optional, Type
+from typing import TypeVar, Generic, Optional
 
 from pycontrolflow.flow_value import wrap_input
 from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode

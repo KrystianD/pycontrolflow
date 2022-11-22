@@ -1,8 +1,8 @@
 import datetime
 
+import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.animation import FuncAnimation
-import numpy as np
 
 from pycontrolflow.FlowExecutor import FlowExecutor
 from pycontrolflow.nodes.comparators.SchmittGate import SchmittGate

@@ -6,10 +6,10 @@ T = TypeVar("T")
 
 def implicit_cast(value: Any, target_type: Type[T]) -> T:
     # allow implicit int -> float cast
-    if type(value) == int and target_type == float:
+    if isinstance(value, int) and target_type == float:
         value = float(value)
 
-    if type(value) != target_type:
+    if not isinstance(value, target_type):
         raise TypeError(f"{type(value)} not equal to {target_type}")
 
     return value
@@ -22,7 +22,8 @@ def is_same_type(type1: Type[Any], type2: Type[Any]) -> bool:
     return type1 == type2
 
 
-def _get_generic_args_internal(typing_obj: Any, expected_class: Any, args_map: Optional[Dict[Any, Any]] = None) -> Optional[List[Any]]:
+def _get_generic_args_internal(typing_obj: Any, expected_class: Any, args_map: Optional[Dict[Any, Any]] = None) -> \
+        Optional[List[Any]]:
     if args_map is None:
         args_map = {}
 
@@ -30,7 +31,8 @@ def _get_generic_args_internal(typing_obj: Any, expected_class: Any, args_map: O
     if obj is None:
         return None
 
-    class_args = [args_map.get(x, x) for x in typing.get_args(typing_obj)]  # get args and replace with passed mapping if exists
+    class_args = [args_map.get(x, x)
+                  for x in typing.get_args(typing_obj)]  # get args and replace with passed mapping if exists
 
     if obj == expected_class:
         return class_args
