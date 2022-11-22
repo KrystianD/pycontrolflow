@@ -16,7 +16,7 @@ class TimerTest(unittest.TestCase):
         executor.add([
             Move(var1, t1.trigger),
             # If(var1, [
-            #     TriggerTimer(t1),
+            #     TimerTrigger(t1),
             # ])
         ])
 
@@ -49,7 +49,7 @@ class TimerTest(unittest.TestCase):
         executor.add([
             Move(var1, t1.trigger),
             # If(var1, [
-            #     TriggerTimer(t1),
+            #     TimerTrigger(t1),
             # ])
         ])
 

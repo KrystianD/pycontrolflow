@@ -36,7 +36,7 @@ See examples [here](examples/README.md).
     * `var` - temporary variable for passing data out of the flow and to use between flow nodes
     * `memory` - variable that persists across flow executions, including passing data into the flow,
 * Timers - performing time-related tasks:
-    * One shot - sets its output to True if time elapses, triggered by `TriggerTimer` node or by its `trigger` variable
+    * One shot - sets its output to True if time elapses, triggered by `TimerTrigger` node or by its `trigger` variable
     * Repeating - sets its output to True every time it elapses
 
 ## Nodes
