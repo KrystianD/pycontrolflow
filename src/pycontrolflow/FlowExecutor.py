@@ -68,13 +68,13 @@ class FlowExecutor:
             for timer in self._timers.values():
                 timer.start_cycle()
 
-            # process timers
-            for timer in self._timers.values():
-                timer.process(delta)
-
             # process lines
             for line in self._flow.items:
                 line.process(timestamp, delta)
+
+            # process timers
+            for timer in self._timers.values():
+                timer.process(delta)
 
             # process timers after
             for timer in self._timers.values():
