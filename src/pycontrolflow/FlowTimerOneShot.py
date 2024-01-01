@@ -3,6 +3,7 @@ from typing import Optional
 
 from pycontrolflow.FlowExecutor import FlowExecutor
 from pycontrolflow.FlowTimer import FlowTimer
+from pycontrolflow.flow_executor_helpers import var_for_node, memory_for_node
 
 
 class FlowTimerOneShot(FlowTimer):
@@ -15,9 +16,9 @@ class FlowTimerOneShot(FlowTimer):
         self._nid = nid
         self._persistent = persistent
 
-        self.trigger = flow_executor._var_for_node(nid, "trigger", bool, False)
-        self.timer = flow_executor._memory_for_node(nid, "duration", timedelta, timedelta(), persistent=persistent)
-        self.enabled = flow_executor._memory_for_node(nid, "enabled", bool, False, persistent=persistent)
+        self.trigger = var_for_node(flow_executor, nid, "trigger", bool, False)
+        self.timer = memory_for_node(flow_executor, nid, "duration", timedelta, timedelta(), persistent=persistent)
+        self.enabled = memory_for_node(flow_executor, nid, "enabled", bool, False, persistent=persistent)
 
     def _trigger(self) -> None:
         if self.enabled.get():

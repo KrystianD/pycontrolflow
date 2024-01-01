@@ -2,6 +2,7 @@ from datetime import timedelta, datetime
 from typing import List, Optional, TYPE_CHECKING, Type, Any, TypeVar, Sequence
 
 from pycontrolflow.IFlowValueProvider import IFlowValueProvider
+from pycontrolflow.flow_executor_helpers import memory_for_node
 from pycontrolflow.flow_value import FlowMemoryCell
 from pycontrolflow.string_utils import random_string
 from pycontrolflow.types import TNodeInput
@@ -50,7 +51,7 @@ class FlowNode:
     def _create_memory(self, name: str, var_type: Type[T], initial_value: T, persistent: bool = False) -> \
             FlowMemoryCell[T]:
         # noinspection PyProtectedMember
-        return self.flow_executor._memory_for_node(self.nid, name, var_type, initial_value, persistent)
+        return memory_for_node(self.flow_executor, self.nid, name, var_type, initial_value, persistent)
 
     def _register_provider(self, provider: TNodeInput[Any]) -> None:
         from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode

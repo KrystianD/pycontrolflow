@@ -6,7 +6,6 @@ from pycontrolflow.FlowTimer import FlowTimer
 from pycontrolflow.date_utils import parse_timedelta
 from pycontrolflow.flow_value import FlowValue, FlowVariable, FlowMemoryCell
 from pycontrolflow.nodes.FlowNode import FlowNode
-from pycontrolflow.string_utils import random_string
 
 if TYPE_CHECKING:
     from pycontrolflow.FlowTimerOneShot import FlowTimerOneShot
@@ -108,17 +107,3 @@ class FlowExecutor:
         obj = FlowTimerRepeating(self, name, parse_timedelta(interval))
         self._timers[name] = obj
         return obj
-
-    def _var_for_node(self, nid: Optional[str], name: str, var_type: Type[T], default: Any = None) -> FlowVariable[T]:
-        path = f"_tmp_node.{random_string(10)}.{name}"
-        return self.var(path, var_type, default)
-
-    def _memory_for_node(self, nid: Optional[str], name: str, var_type: Type[T], initial_value: T,
-                         persistent: bool = False) -> FlowMemoryCell[T]:
-        if persistent:
-            if nid is None:
-                raise Exception("can't create persistent memory cell without node id (nid)")
-            path = f"_node.{nid}.{name}"
-        else:
-            path = f"_tmp_node.{random_string(10)}.{name}"
-        return self.memory(path, var_type, initial_value, persistent)
