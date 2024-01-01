@@ -33,7 +33,7 @@ class DFlipFlop(FlowSingleOutputNode[TValue], Generic[TValue]):
     def process(self, cur_date: datetime, delta: timedelta) -> None:
         super().process(cur_date, delta)
         value = self._value.get()
-        clock = self._clock.get_notnull()
+        clock = self._clock.get()
 
         prev_clock = self._clock_mem.get()
         if prev_clock is False and clock is True:

@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 
 T = TypeVar("T")
 
-TState = Dict[str, Union[str, float, None]]
+TState = Dict[str, Union[str, float]]
 
 
 class FlowExecutor:

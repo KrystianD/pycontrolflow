@@ -40,7 +40,7 @@ class FlowTimerOneShot(FlowTimer):
             assert cur_duration is not None
             self.timer.set(cur_duration + delta)
 
-            if self.timer.get_notnull() >= self._duration:
+            if self.timer.get() >= self._duration:
                 self.enabled.set(False)
                 self.timer.set(self._duration)
 

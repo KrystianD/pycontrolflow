@@ -20,17 +20,17 @@ class DayCrosser(FlowSingleOutputNode[bool]):
 
     def reset_state(self) -> None:
         super().reset_state()
-        self.prev_date.set(None)
+        self.prev_date.set(datetime.min)
 
     def process(self, cur_date: datetime, delta: timedelta) -> None:
         super().process(cur_date, delta)
 
-        if self.prev_date.get_notnull() == datetime.min:
+        if self.prev_date.get() == datetime.min:
             self.prev_date.set(cur_date)
 
         date_point = cur_date.replace(hour=self.cross_time.hour, minute=self.cross_time.minute,
                                       second=self.cross_time.second)
 
-        self.set_output(self.prev_date.get_notnull() < date_point <= cur_date)
+        self.set_output(self.prev_date.get() < date_point <= cur_date)
 
         self.prev_date.set(cur_date)

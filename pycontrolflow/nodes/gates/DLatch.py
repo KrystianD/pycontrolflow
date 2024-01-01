@@ -31,7 +31,7 @@ class DLatch(FlowSingleOutputNode[TValue], Generic[TValue]):
     def process(self, cur_date: datetime, delta: timedelta) -> None:
         super().process(cur_date, delta)
         value = self._value.get()
-        enable = self._enable.get_notnull()
+        enable = self._enable.get()
 
         if enable is True:
             self._value_mem.set(value)

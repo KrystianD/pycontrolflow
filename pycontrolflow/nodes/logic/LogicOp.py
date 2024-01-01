@@ -16,7 +16,7 @@ class LogicOp(FlowSingleOutputNode[bool]):
 
     def process(self, cur_date: datetime, delta: timedelta) -> None:
         super().process(cur_date, delta)
-        input_values = [value.get_notnull() for value in self.input_values]
+        input_values = [value.get() for value in self.input_values]
 
         value = self.op(input_values)
 

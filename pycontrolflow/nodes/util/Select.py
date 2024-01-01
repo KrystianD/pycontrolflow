@@ -37,10 +37,10 @@ class Select(FlowSingleOutputNode[TOutput], Generic[TOutput]):
     def process(self, cur_date: datetime, delta: timedelta) -> None:
         super().process(cur_date, delta)
         for cond, out_value in self.conditions:
-            if cond.get_notnull() is True:
-                self.set_output(out_value.get_notnull())
+            if cond.get() is True:
+                self.set_output(out_value.get())
                 return
 
         if self.has_default:
             assert self.default_value is not None
-            self.set_output(self.default_value.get_notnull())
+            self.set_output(self.default_value.get())

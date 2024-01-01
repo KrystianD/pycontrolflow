@@ -24,7 +24,7 @@ class PreviousStateCondition(FlowSingleOutputNode[TOutput], Generic[TInput, TOut
 
     def process(self, cur_date: datetime, delta: timedelta) -> None:
         super().process(cur_date, delta)
-        value = self.input_.get_notnull()
+        value = self.input_.get()
 
         if self.prev_value is not None:
             condition = self.process_values(self.prev_value, value)

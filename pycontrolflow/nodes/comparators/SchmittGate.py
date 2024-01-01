@@ -36,14 +36,14 @@ class SchmittGate(FlowSingleOutputNode[bool]):
 
     def process(self, cur_date: datetime, delta: timedelta) -> None:
         super().process(cur_date, delta)
-        value = self.input_.get_notnull()
+        value = self.input_.get()
 
-        if value > self.high_value.get_notnull():
+        if value > self.high_value.get():
             self.state.set(True)
-        elif value < self.low_value.get_notnull():
+        elif value < self.low_value.get():
             self.state.set(False)
 
-        cur_state = self.state.get_notnull()
+        cur_state = self.state.get()
         assert cur_state is not None
 
         if self.invert:

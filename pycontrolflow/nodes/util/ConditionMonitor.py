@@ -35,23 +35,23 @@ class ConditionMonitor(FlowNode):
         value = self.input_name.get()
         assert isinstance(value, bool)
 
-        if self.last_condition_met_date.get_notnull() != datetime.min:
-            time_since_last_met = cur_date - self.last_condition_met_date.get_notnull()
+        if self.last_condition_met_date.get() != datetime.min:
+            time_since_last_met = cur_date - self.last_condition_met_date.get()
 
             if time_since_last_met > self.max_gap_time:
                 self.condition_met_start.set(datetime.min)
 
         if value:
-            if self.condition_met_start.get_notnull() == datetime.min:
+            if self.condition_met_start.get() == datetime.min:
                 self.condition_met_start.set(cur_date)
 
             self.last_condition_met_date.set(cur_date)
 
         if self.output_met is not None:
-            self.output_met.set(self.condition_met_start.get_notnull() != datetime.min)
+            self.output_met.set(self.condition_met_start.get() != datetime.min)
 
         if self.output_met_time is not None:
-            if self.condition_met_start.get_notnull() == datetime.min:
+            if self.condition_met_start.get() == datetime.min:
                 self.output_met_time.set(timedelta())
             else:
-                self.output_met_time.set(cur_date - self.condition_met_start.get_notnull())
+                self.output_met_time.set(cur_date - self.condition_met_start.get())

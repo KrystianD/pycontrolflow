@@ -25,8 +25,8 @@ class SRLatch(FlowSingleOutputNode[bool]):
 
     def process(self, cur_date: datetime, delta: timedelta) -> None:
         super().process(cur_date, delta)
-        set_ = self._set.get_notnull()
-        reset_ = self._reset.get_notnull()
+        set_ = self._set.get()
+        reset_ = self._reset.get()
 
         if set_ is True and reset_ is False:
             self._state_mem.set(True)

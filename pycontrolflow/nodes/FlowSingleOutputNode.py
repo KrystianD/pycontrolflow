@@ -31,7 +31,7 @@ class FlowSingleOutputNode(FlowNode, IFlowValueProvider[TFlowSingleOutputNodeTyp
         assert self.output_value is not None
         self.output_value.set(value)
 
-    def get(self) -> Optional[TFlowSingleOutputNodeType]:
+    def get(self) -> TFlowSingleOutputNodeType:
         assert self.output_value is not None
         return self.output_value.get()
 

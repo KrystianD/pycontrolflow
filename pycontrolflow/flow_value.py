@@ -32,7 +32,7 @@ class FlowValue(Generic[TValue], IFlowValueProvider[TValue]):
         self.default = implicit_cast(default, self.type)
         self._value = self.default
 
-    def set(self, value: Optional[TValue]) -> None:
+    def set(self, value: TValue) -> None:
         if value is None:
             raise ValueError("value cannot be None")
 
@@ -44,41 +44,26 @@ class FlowValue(Generic[TValue], IFlowValueProvider[TValue]):
         self._value = value
 
     def increment(self, value: TValue) -> None:
-        cur_value = self.get_notnull()
+        cur_value = self.get()
         self.set(cur_value + value)  # type: ignore
 
-    def get(self) -> Optional[TValue]:
+    def get(self) -> TValue:
         return self._value
-
-    def get_notnull(self) -> TValue:
-        assert self._value is not None
-        return self._value
-
-    # def get_or_default(self, default: TValue) -> TValue:
-    #     return default if self._value is None else self._value
-
-    def isnull(self) -> bool:
-        return self._value is None
-
-    def isnotnull(self) -> bool:
-        return self._value is not None
 
     def assert_type(self, type_to_check: Type[TValue]) -> None:
         assert self.type == type_to_check
 
-    def to_json(self) -> Optional[Union[str, float]]:
-        if self._value is None:
-            return None
-        elif self.type == datetime.datetime:
+    def to_json(self) -> Union[str, float]:
+        if self.type == datetime.datetime:
             return isodate.datetime_isoformat(cast(datetime.datetime, self._value))
         elif self.type == datetime.timedelta:
             return isodate.duration_isoformat(cast(datetime.timedelta, self._value))
         else:
             return cast(Union[str, float], self._value)
 
-    def from_json(self, data: Optional[Union[str, float]]) -> None:
+    def from_json(self, data: Union[str, float]) -> None:
         if data is None:
-            self._value = None
+            raise ValueError("value cannot be None")
         elif self.type == datetime.datetime:
             self._value = cast(TValue, isodate.parse_datetime(cast(str, data)))
         elif self.type == datetime.timedelta:
@@ -98,7 +83,7 @@ class FlowVariable(FlowValue[TValue]):
     def start_cycle(self) -> None:
         self._value = self.default
 
-    def set(self, value: Optional[TValue]) -> None:
+    def set(self, value: TValue) -> None:
         if not self._executor._is_executing:
             raise Exception("variables can't be set outside of the flow")
         super().set(value)
@@ -133,21 +118,11 @@ def wrap_input_check_type(input_: TNodeInput[TValue], expected_type: Type[TValue
     return wrapped
 
 
-def resolve_value(value: TNodeInput[TValue]) -> Optional[TValue]:
+def resolve_value(value: TNodeInput[TValue]) -> TValue:
     if isinstance(value, IFlowValueProvider):
         return value.get()
     else:
         return value
-
-
-def resolve_value_notnull(value: TNodeInput[TValue]) -> TValue:
-    if isinstance(value, IFlowValueProvider):
-        ret_value = value.get()
-    else:
-        ret_value = value
-
-    assert ret_value is not None
-    return ret_value
 
 
 def assert_type(value: Any, var_type: Any, allow_null: bool) -> None:

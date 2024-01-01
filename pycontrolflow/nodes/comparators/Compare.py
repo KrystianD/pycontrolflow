@@ -33,8 +33,8 @@ class Comparer(FlowSingleOutputNode[bool], Generic[TValue]):
 
     def process(self, cur_date: datetime, delta: timedelta) -> None:
         super().process(cur_date, delta)
-        value1 = self._input1.get_notnull()
-        value2 = self._input2.get_notnull()
+        value1 = self._input1.get()
+        value2 = self._input2.get()
 
         state = self._op(value1, value2)
 
