@@ -1,0 +1,19 @@
+[project]
+name = "pycontrolflow"
+version = "0.1.0"
+description = "Python framework for easy control algorithms writing with many ready to use blocks. Can be seen as a combination of Node-RED and PLC ladder programming."
+readme = "README.md"
+license = { file = "LICENSE.txt" }
+requires-python = ">=3.8"
+keywords = ["python", "workflow", "algorithms", "notes", "node-red", "blocks", "plc", "control-systems", "flows", "ladder-logic"]
+authors = [
+    { name = "Krystian Dużyński" },
+]
+
+dynamic = ["dependencies"]
+
+[project.urls]
+repository = "https://github.com/KrystianD/modbus_client"
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }

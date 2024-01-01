@@ -6,7 +6,7 @@ from pycontrolflow.nodes.values.Move import Move
 
 
 class TimerTest(unittest.TestCase):
-    def test_basic(self):
+    def test_basic(self) -> None:
         executor = FlowExecutor()
 
         var1 = executor.memory("var1", bool, initial_value=False)
@@ -39,7 +39,7 @@ class TimerTest(unittest.TestCase):
         self.assertFalse(t1.enabled.get())
         self.assertEqual(timedelta(seconds=10), t1.timer.get())
 
-    def test_extend(self):
+    def test_extend(self) -> None:
         executor = FlowExecutor()
 
         var1 = executor.memory("var1", bool, initial_value=False)

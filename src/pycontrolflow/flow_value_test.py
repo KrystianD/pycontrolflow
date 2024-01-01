@@ -6,7 +6,7 @@ from pycontrolflow.nodes.values.Move import Move
 
 
 class VarTest(unittest.TestCase):
-    def test1(self):
+    def test1(self) -> None:
         executor = FlowExecutor()
 
         var1 = executor.var("var1", int)
