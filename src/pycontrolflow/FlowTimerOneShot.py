@@ -18,6 +18,7 @@ class FlowTimerOneShot(FlowTimer):
         self._persistent = persistent
 
         self.trigger = var_for_node(flow_executor, nid, "trigger", bool, False)
+        self.reset = var_for_node(flow_executor, nid, "reset", bool, False)
         self._timer = memory_for_node(flow_executor, nid, "duration", timedelta, timedelta(), persistent=persistent)
         self._enabled = memory_for_node(flow_executor, nid, "enabled", bool, False, persistent=persistent)
 
@@ -40,7 +41,10 @@ class FlowTimerOneShot(FlowTimer):
         pass
 
     def process(self, delta: timedelta) -> None:
-        if self._enabled.get():
+        if self.reset.get():
+            self._timer.set(timedelta())  # reset timer
+            self._enabled.set(False)
+        elif self._enabled.get():
             cur_duration = self._timer.get()
             assert cur_duration is not None
             self._timer.set(cur_duration + delta)
