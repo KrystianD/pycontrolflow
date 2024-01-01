@@ -1,7 +1,7 @@
 from typing import Optional
 
+from pycontrolflow.mytypes import TNodeInput
 from pycontrolflow.nodes.comparators.PreviousStateCondition import PreviousStateCondition
-from pycontrolflow.types import TNodeInput
 
 
 class EdgeRising(PreviousStateCondition[bool, bool]):

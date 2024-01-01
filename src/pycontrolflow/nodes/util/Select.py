@@ -3,8 +3,8 @@ from typing import TypeVar, Optional, Tuple, List, Generic
 
 from pycontrolflow.IFlowValueProvider import IFlowValueProvider
 from pycontrolflow.flow_value import wrap_input
+from pycontrolflow.mytypes import TNodeInput
 from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
-from pycontrolflow.types import TNodeInput
 
 TOutput = TypeVar("TOutput")
 

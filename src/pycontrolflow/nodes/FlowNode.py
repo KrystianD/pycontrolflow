@@ -4,8 +4,8 @@ from typing import List, Optional, TYPE_CHECKING, Type, Any, TypeVar, Sequence
 from pycontrolflow.IFlowValueProvider import IFlowValueProvider
 from pycontrolflow.flow_executor_helpers import memory_for_node
 from pycontrolflow.flow_value import FlowMemoryCell
+from pycontrolflow.mytypes import TNodeInput
 from pycontrolflow.string_utils import random_string
-from pycontrolflow.types import TNodeInput
 
 if TYPE_CHECKING:
     from pycontrolflow.Flow import Flow

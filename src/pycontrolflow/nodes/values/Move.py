@@ -2,8 +2,8 @@ from datetime import datetime, timedelta
 from typing import TypeVar, Generic
 
 from pycontrolflow.flow_value import FlowValue, wrap_input
+from pycontrolflow.mytypes import TNodeInput
 from pycontrolflow.nodes.FlowNode import FlowNode
-from pycontrolflow.types import TNodeInput
 
 TValue = TypeVar("TValue")
 

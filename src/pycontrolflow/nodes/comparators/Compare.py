@@ -2,9 +2,9 @@ from datetime import datetime, timedelta
 from typing import TypeVar, Callable, Generic
 
 from pycontrolflow.flow_value import wrap_input
+from pycontrolflow.mytypes import TNodeInput, TComparable
 from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
 from pycontrolflow.type_utils import is_same_type
-from pycontrolflow.types import TNodeInput, TComparable
 
 TValue = TypeVar("TValue")
 

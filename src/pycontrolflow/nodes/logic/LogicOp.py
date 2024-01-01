@@ -2,8 +2,8 @@ from datetime import datetime, timedelta
 from typing import Callable, List, Sequence
 
 from pycontrolflow.flow_value import wrap_inputs
+from pycontrolflow.mytypes import TNodeInput
 from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
-from pycontrolflow.types import TNodeInput
 
 
 class LogicOp(FlowSingleOutputNode[bool]):

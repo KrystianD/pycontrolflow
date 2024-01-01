@@ -6,8 +6,8 @@ from typing import Type, Any, TypeVar, Optional, Generic, Union, cast, List, Ite
 import isodate
 
 from pycontrolflow.IFlowValueProvider import IFlowValueProvider, ConstantFlowValueProvider
+from pycontrolflow.mytypes import TNodeInput
 from pycontrolflow.type_utils import implicit_cast
-from pycontrolflow.types import TNodeInput
 
 if TYPE_CHECKING:
     from pycontrolflow.FlowExecutor import FlowExecutor

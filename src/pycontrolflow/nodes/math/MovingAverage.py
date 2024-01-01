@@ -2,8 +2,8 @@ from datetime import datetime, timedelta
 from typing import Optional
 
 from pycontrolflow.flow_value import wrap_input
+from pycontrolflow.mytypes import TNodeInput
 from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
-from pycontrolflow.types import TNodeInput
 
 
 class MovingAverage(FlowSingleOutputNode[float]):

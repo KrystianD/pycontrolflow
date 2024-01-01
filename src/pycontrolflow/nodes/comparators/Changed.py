@@ -1,7 +1,7 @@
 from typing import TypeVar, Generic
 
+from pycontrolflow.mytypes import TNodeInput
 from pycontrolflow.nodes.comparators.PreviousStateCondition import PreviousStateCondition
-from pycontrolflow.types import TNodeInput
 
 TValue = TypeVar("TValue")
 

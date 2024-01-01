@@ -3,8 +3,8 @@ from datetime import datetime, timedelta
 from typing import TypeVar, Generic, Optional
 
 from pycontrolflow.flow_value import wrap_input
+from pycontrolflow.mytypes import TNodeInput
 from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
-from pycontrolflow.types import TNodeInput
 
 TInput = TypeVar("TInput")
 TOutput = TypeVar("TOutput")
