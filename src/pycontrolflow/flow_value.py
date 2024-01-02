@@ -6,6 +6,7 @@ from typing import Type, Any, TypeVar, Optional, Generic, Union, cast, List, Ite
 import isodate
 
 from pycontrolflow.IFlowValueProvider import IFlowValueProvider, ConstantFlowValueProvider
+from pycontrolflow.computed_read_only_flow_value import ComputedReadOnlyFlowValue
 from pycontrolflow.mytypes import TNodeInput
 from pycontrolflow.type_utils import implicit_cast
 
@@ -77,6 +78,12 @@ class FlowValue(Generic[TValue], IFlowValueProvider[TValue]):
     @abstractmethod
     def start_cycle(self) -> None:
         pass
+
+    def with_add(self, value: TValue) -> ComputedReadOnlyFlowValue[TValue]:
+        return ComputedReadOnlyFlowValue(self, lambda x: x + value)
+
+    def with_sub(self, value: TValue) -> ComputedReadOnlyFlowValue[TValue]:
+        return ComputedReadOnlyFlowValue(self, lambda x: x - value)
 
 
 class FlowVariable(FlowValue[TValue]):
