@@ -1,7 +1,7 @@
 import datetime
 import logging
 from abc import abstractmethod
-from typing import Type, Any, TypeVar, Optional, Generic, Union, cast, List, Iterable, TYPE_CHECKING
+from typing import Type, Any, TypeVar, Optional, Generic, Union, cast, List, Iterable, TYPE_CHECKING, Callable
 
 import isodate
 
@@ -14,6 +14,8 @@ if TYPE_CHECKING:
     from pycontrolflow.FlowExecutor import FlowExecutor
 
 TValue = TypeVar("TValue")
+
+TOnChangeCallback = Callable[[], None]
 
 logger = logging.getLogger("pycontrolflow")
 
@@ -32,17 +34,22 @@ class FlowValue(Generic[TValue], IFlowValueProvider[TValue]):
         self.type = value_type
         self.default = implicit_cast(default, self.type)
         self._value = self.default
+        self._on_change: Optional[TOnChangeCallback] = None
 
     def set(self, value: TValue) -> None:
         if value is None:
             raise ValueError("value cannot be None")
 
+        prev_value = self._value
         value = implicit_cast(value, self.type)
 
         if not self.name.startswith(("_tmp_node.", "_tmp.")):
             logger.debug(f"/{self.name}/ set to /{format_value_for_debug(value)}/")
             pass
         self._value = value
+
+        if self._on_change is not None and self._value != prev_value:
+            self._on_change()
 
     def increment(self, value: TValue) -> None:
         cur_value = self.get()
@@ -78,6 +85,9 @@ class FlowValue(Generic[TValue], IFlowValueProvider[TValue]):
     @abstractmethod
     def start_cycle(self) -> None:
         pass
+
+    def register_on_change(self, cb: TOnChangeCallback):
+        self._on_change = cb
 
     def with_add(self, value: TValue) -> ComputedReadOnlyFlowValue[TValue]:
         return ComputedReadOnlyFlowValue(self, lambda x: x + value)
