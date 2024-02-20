@@ -81,6 +81,9 @@ class FlowExecutor:
             # process timers after
             for timer in self._timers.values():
                 timer.process_after()
+
+            for line in self._flow.items:
+                line.process_after(timestamp, delta)
         finally:
             self._is_executing = False
 

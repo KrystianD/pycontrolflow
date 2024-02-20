@@ -48,6 +48,11 @@ class FlowNode:
             if isinstance(provider, FlowNode):
                 provider.process(cur_date, delta)
 
+    def process_after(self, cur_date: datetime, delta: timedelta) -> None:
+        for provider in self.providers:
+            if isinstance(provider, FlowNode):
+                provider.process_after(cur_date, delta)
+
     def _create_memory(self, name: str, var_type: Type[T], initial_value: T, persistent: bool = False) -> \
             FlowMemoryCell[T]:
         # noinspection PyProtectedMember
