@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from typing import Dict, Any, List, Type, TypeVar, Optional, Union, TYPE_CHECKING
+from typing import Dict, Any, List, Type, TypeVar, Optional, Union, TYPE_CHECKING, Tuple
 
 from pycontrolflow.Flow import Flow
 from pycontrolflow.FlowTimer import FlowTimer
@@ -23,6 +23,7 @@ class FlowExecutor:
         self._timers: Dict[str, FlowTimer] = {}
 
         self._prev_timestamp: Optional[datetime] = None
+        self._cur_timestamp_delta: Optional[Tuple[datetime, timedelta]] = None
 
         self._is_executing = False
 
@@ -57,6 +58,7 @@ class FlowExecutor:
             self._prev_timestamp = timestamp
         delta = timestamp - self._prev_timestamp
         self._prev_timestamp = timestamp
+        self._cur_timestamp_delta = (timestamp, delta)
 
         try:
             self._is_executing = True
@@ -107,3 +109,7 @@ class FlowExecutor:
         obj = FlowTimerRepeating(self, name, parse_timedelta(interval))
         self._timers[name] = obj
         return obj
+
+    @property
+    def cur_timestamp_delta(self) -> Optional[Tuple[datetime, timedelta]]:
+        return self._cur_timestamp_delta
