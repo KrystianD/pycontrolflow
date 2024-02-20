@@ -86,7 +86,7 @@ class FlowValue(Generic[TValue], IFlowValueProvider[TValue]):
     def start_cycle(self) -> None:
         pass
 
-    def register_on_change(self, cb: TOnChangeCallback):
+    def register_on_change(self, cb: TOnChangeCallback) -> None:
         self._on_change = cb
 
     def with_add(self, value: TValue) -> ComputedReadOnlyFlowValue[TValue]:
