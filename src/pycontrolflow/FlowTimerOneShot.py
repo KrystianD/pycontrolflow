@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 from typing import Optional
 
 from pycontrolflow.FlowExecutor import FlowExecutor
@@ -40,7 +40,7 @@ class FlowTimerOneShot(FlowTimer):
     def start_cycle(self) -> None:
         pass
 
-    def process(self, delta: timedelta) -> None:
+    def process(self, cur_date: datetime, delta: timedelta) -> None:
         if self.reset.get():
             self._timer.set(timedelta())  # reset timer
             self._enabled.set(False)

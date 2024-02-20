@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 from pycontrolflow.FlowExecutor import FlowExecutor
 from pycontrolflow.FlowTimer import FlowTimer
@@ -16,7 +16,7 @@ class FlowTimerRepeating(FlowTimer):
     def start_cycle(self) -> None:
         self.elapsed.set(False)
 
-    def process(self, delta: timedelta) -> None:
+    def process(self, cur_date: datetime, delta: timedelta) -> None:
         self._timer += delta
 
         if self._timer > self.interval:

@@ -74,7 +74,7 @@ class FlowExecutor:
 
             # process timers
             for timer in self._timers.values():
-                timer.process(delta)
+                timer.process(timestamp, delta)
 
             # process timers after
             for timer in self._timers.values():

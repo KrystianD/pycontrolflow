@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 
 class FlowTimer:
@@ -11,7 +11,7 @@ class FlowTimer:
         pass
 
     @abstractmethod
-    def process(self, delta: timedelta) -> None:
+    def process(self, cur_date: datetime, delta: timedelta) -> None:
         pass
 
     @abstractmethod
