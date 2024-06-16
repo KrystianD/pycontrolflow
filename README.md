@@ -81,6 +81,7 @@ See examples [here](examples/README.md).
 ### Util
 
 * [ConditionMonitor](pycontrolflow/nodes/util/ConditionMonitor.py) - advanced condition monitor with an optional gap allowance
+* [Debounce](pycontrolflow/nodes/util/Debounce.py) - limit change rate of a variable
 * [Select](pycontrolflow/nodes/util/Select.py) - helper for selecting values based on input value
 * [Startup](pycontrolflow/nodes/util/Startup.py) - outputs True only on the first Flow run
 * [Transform](pycontrolflow/nodes/util/Transform.py) - transforms input values into output value using specified user function
