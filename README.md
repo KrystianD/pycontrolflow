@@ -80,7 +80,7 @@ See examples [here](examples/README.md).
 
 ### Util
 
-* [ConditionMonitor](pycontrolflow/nodes/util/ConditionMonitor.py) - Advanced condition monitor with an optional gap allowance
+* [ConditionMonitor](pycontrolflow/nodes/util/ConditionMonitor.py) - advanced condition monitor with an optional gap allowance
 * [Select](pycontrolflow/nodes/util/Select.py) - helper for selecting values based on input value
 * [Startup](pycontrolflow/nodes/util/Startup.py) - outputs True only on the first Flow run
 * [Transform](pycontrolflow/nodes/util/Transform.py) - transforms input values into output value using specified user function
