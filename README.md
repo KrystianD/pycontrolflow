@@ -43,51 +43,51 @@ See examples [here](examples/README.md).
 
 ### Comparators
 
-* [Changed](pycontrolflow/nodes/comparators/Changed.py) - detects of variable change
-* [Compare](pycontrolflow/nodes/comparators/Compare.py) - compares two variables
-* [EdgeFalling](pycontrolflow/nodes/comparators/EdgeFalling.py) - detects condition change from True to False
-* [EdgeRising](pycontrolflow/nodes/comparators/EdgeRising.py) - detects condition change from False to True
-* [SchmittGate](pycontrolflow/nodes/comparators/SchmittGate.py) - gate with hysteresis
-* [PreviousStateCondition](pycontrolflow/nodes/comparators/PreviousStateCondition.py) - base node for creating comparators
+* [Changed](src/pycontrolflow/nodes/comparators/Changed.py) - detects of variable change
+* [Compare](src/pycontrolflow/nodes/comparators/Compare.py) - compares two variables
+* [EdgeFalling](src/pycontrolflow/nodes/comparators/EdgeFalling.py) - detects condition change from True to False
+* [EdgeRising](src/pycontrolflow/nodes/comparators/EdgeRising.py) - detects condition change from False to True
+* [SchmittGate](src/pycontrolflow/nodes/comparators/SchmittGate.py) - gate with hysteresis
+* [PreviousStateCondition](src/pycontrolflow/nodes/comparators/PreviousStateCondition.py) - base node for creating comparators
 
 ### Date/time utils
 
-* [DayCrosser](pycontrolflow/nodes/datetime/DayCrosser.py) - detects the day change (with optional specific time)
-* [TimeCheck](pycontrolflow/nodes/datetime/TimeCheck.py) - checks if current time is within range
+* [DayCrosser](src/pycontrolflow/nodes/datetime/DayCrosser.py) - detects the day change (with optional specific time)
+* [TimeCheck](src/pycontrolflow/nodes/datetime/TimeCheck.py) - checks if current time is within range
 
 ### Flow control
 
-* [If](pycontrolflow/nodes/flow_control/If.py) - branches flow depending on the condition
+* [If](src/pycontrolflow/nodes/flow_control/If.py) - branches flow depending on the condition
 
 ### Gates
 
-* [DFlipFlop](pycontrolflow/nodes/gates/DFlipFlop.py) - edge-triggered D gate - [wiki](https://ecstudiosystems.com/discover/textbooks/basic-electronics/flip-flops/d-flip-flop/)
-* [DLatch](pycontrolflow/nodes/gates/DLatch.py) - level-triggered D gate - [wiki](https://en.wikipedia.org/wiki/Flip-flop_(electronics)#Gated_D_latch)
-* [SRLatch](pycontrolflow/nodes/gates/SRLatch.py) - level-triggered SR gate - [wiki](https://en.wikipedia.org/wiki/Flip-flop_(electronics)#Gated_SR_latch)
+* [DFlipFlop](src/pycontrolflow/nodes/gates/DFlipFlop.py) - edge-triggered D gate - [wiki](https://ecstudiosystems.com/discover/textbooks/basic-electronics/flip-flops/d-flip-flop/)
+* [DLatch](src/pycontrolflow/nodes/gates/DLatch.py) - level-triggered D gate - [wiki](https://en.wikipedia.org/wiki/Flip-flop_(electronics)#Gated_D_latch)
+* [SRLatch](src/pycontrolflow/nodes/gates/SRLatch.py) - level-triggered SR gate - [wiki](https://en.wikipedia.org/wiki/Flip-flop_(electronics)#Gated_SR_latch)
 
 ### Logic
 
-* [And](pycontrolflow/nodes/logic/And.py) - logical AND on the inputs
-* [Or](pycontrolflow/nodes/logic/Or.py) - logical OR on the inputs
-* [Invert](pycontrolflow/nodes/logic/Invert.py) - logical NOT on the input
-* [LogicOp](pycontrolflow/nodes/logic/LogicOp.py) - base node for creating logic operators
+* [And](src/pycontrolflow/nodes/logic/And.py) - logical AND on the inputs
+* [Or](src/pycontrolflow/nodes/logic/Or.py) - logical OR on the inputs
+* [Invert](src/pycontrolflow/nodes/logic/Invert.py) - logical NOT on the input
+* [LogicOp](src/pycontrolflow/nodes/logic/LogicOp.py) - base node for creating logic operators
 
 ### Timers
 
-* [TimerOnDelay](pycontrolflow/nodes/timers/TimerOnDelay.py) - enables its output if the input is True for specific amount of time (like PLC ON Timer)
-* [TimerStop](pycontrolflow/nodes/timers/TimerStop.py) - stops running one-shot timer
-* [TimerTrigger](pycontrolflow/nodes/timers/TimerTrigger.py) - triggers (or re-triggers) one-shot timer
+* [TimerOnDelay](src/pycontrolflow/nodes/timers/TimerOnDelay.py) - enables its output if the input is True for specific amount of time (like PLC ON Timer)
+* [TimerStop](src/pycontrolflow/nodes/timers/TimerStop.py) - stops running one-shot timer
+* [TimerTrigger](src/pycontrolflow/nodes/timers/TimerTrigger.py) - triggers (or re-triggers) one-shot timer
 
 ### Util
 
-* [ConditionMonitor](pycontrolflow/nodes/util/ConditionMonitor.py) - advanced condition monitor with an optional gap allowance
-* [Debounce](pycontrolflow/nodes/util/Debounce.py) - limit change rate of a variable
-* [Select](pycontrolflow/nodes/util/Select.py) - helper for selecting values based on input value
-* [Startup](pycontrolflow/nodes/util/Startup.py) - outputs True only on the first Flow run
-* [Transform](pycontrolflow/nodes/util/Transform.py) - transforms input values into output value using specified user function
+* [ConditionMonitor](src/pycontrolflow/nodes/util/ConditionMonitor.py) - advanced condition monitor with an optional gap allowance
+* [Debounce](src/pycontrolflow/nodes/util/Debounce.py) - limit change rate of a variable
+* [Select](src/pycontrolflow/nodes/util/Select.py) - helper for selecting values based on input value
+* [Startup](src/pycontrolflow/nodes/util/Startup.py) - outputs True only on the first Flow run
+* [Transform](src/pycontrolflow/nodes/util/Transform.py) - transforms input values into output value using specified user function
 
 ### Values
 
-* [Set](pycontrolflow/nodes/values/Set.py) - outputs True
-* [Clear](pycontrolflow/nodes/values/Clear.py) - outputs False
-* [Move](pycontrolflow/nodes/values/Move.py) - moves input to output
+* [Set](src/pycontrolflow/nodes/values/Set.py) - outputs True
+* [Clear](src/pycontrolflow/nodes/values/Clear.py) - outputs False
+* [Move](src/pycontrolflow/nodes/values/Move.py) - moves input to output
