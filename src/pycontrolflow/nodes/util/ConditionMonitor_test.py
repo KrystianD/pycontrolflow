@@ -16,8 +16,7 @@ class ConditionMonitorTest(unittest.TestCase):
 
         executor.add([
             ConditionMonitor(test1, max_gap_time=timedelta(seconds=10), nid="nid1", persistent=True,
-                             output_met=test_met,
-                             output_met_time=test_met_time),
+                             output_met_time=test_met_time).to(test_met),
         ])
 
         test1.set(True)

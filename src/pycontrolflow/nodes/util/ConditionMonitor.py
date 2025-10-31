@@ -2,16 +2,14 @@ from datetime import timedelta, datetime
 from typing import Optional
 
 from pycontrolflow.flow_value import FlowValue, FlowMemoryCell
-from pycontrolflow.nodes.FlowNode import FlowNode
+from pycontrolflow.nodes.FlowSingleOutputNode import FlowSingleOutputNode
 
 
-class ConditionMonitor(FlowNode):
-    def __init__(self, input_name: FlowValue[bool], max_gap_time: timedelta, output_met: FlowValue[bool],
-                 output_met_time: FlowValue[timedelta], nid: Optional[str] = None,
+class ConditionMonitor(FlowSingleOutputNode[bool]):
+    def __init__(self, input_name: FlowValue[bool], max_gap_time: timedelta, output_met_time: Optional[FlowValue[timedelta]], nid: Optional[str] = None,
                  persistent: bool = False) -> None:
         super().__init__([input_name], nid=nid)
         self.input_name = input_name
-        self.output_met = output_met
         self.output_met_time = output_met_time
         self.persistent = persistent
 
@@ -47,8 +45,7 @@ class ConditionMonitor(FlowNode):
 
             self.last_condition_met_date.set(cur_date)
 
-        if self.output_met is not None:
-            self.output_met.set(self.condition_met_start.get() != datetime.min)
+        self.set_output(self.condition_met_start.get() != datetime.min)
 
         if self.output_met_time is not None:
             if self.condition_met_start.get() == datetime.min:
