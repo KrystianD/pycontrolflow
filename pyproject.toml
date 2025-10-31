@@ -13,7 +13,7 @@ authors = [
 dynamic = ["dependencies"]
 
 [project.urls]
-repository = "https://github.com/KrystianD/modbus_client"
+repository = "https://github.com/KrystianD/pycontrolflow"
 
 [tool.setuptools.dynamic]
 dependencies = { file = ["requirements.txt"] }

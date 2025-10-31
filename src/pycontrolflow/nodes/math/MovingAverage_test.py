@@ -31,7 +31,3 @@ class MovingAverageTest(unittest.TestCase):
         var.set(2)
         executor.run(datetime(2020, 1, 1, 15, 0, 3))
         self.assertEqual(1.875, out.get())
-
-
-if __name__ == '__main__':
-    unittest.main()
