@@ -20,9 +20,8 @@ class ConditionMonitor(FlowSingleOutputNode[bool]):
 
     def setup(self) -> None:
         super().setup()
-        self.condition_met_start = self.flow_executor.memory("met_start", datetime, datetime.min, self.persistent)
-        self.last_condition_met_date = self.flow_executor.memory("last_met_date", datetime, datetime.min,
-                                                                 self.persistent)
+        self.condition_met_start = self._create_memory("met_start", datetime, datetime.min, self.persistent)
+        self.last_condition_met_date = self._create_memory("last_met_date", datetime, datetime.min, self.persistent)
 
     def reset_state(self) -> None:
         super().reset_state()

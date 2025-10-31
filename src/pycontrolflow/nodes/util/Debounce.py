@@ -21,10 +21,10 @@ class Debounce(FlowSingleOutputNode[TValue], Generic[TValue]):
 
     def setup(self) -> None:
         super().setup()
-        self._last_value = self.flow_executor.memory("last_value", self.input_name.get_type(), self.input_name.get(),
+        self._last_value = self._create_memory("last_value", self.input_name.get_type(), self.input_name.get(),
+                                               self.persistent)
+        self._last_change_date = self._create_memory("last_change_date", datetime, datetime.min,
                                                      self.persistent)
-        self._last_change_date = self.flow_executor.memory("last_change_date", datetime, datetime.min,
-                                                           self.persistent)
 
     def reset_state(self) -> None:
         super().reset_state()

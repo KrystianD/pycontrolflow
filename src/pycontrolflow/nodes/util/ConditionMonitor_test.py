@@ -57,5 +57,5 @@ class ConditionMonitorTest(unittest.TestCase):
         state = executor.serialize_state()
         # print(executor.serialize_state())
 
-        self.assertEqual('{"met_start": "2020-01-01T15:00:30", "last_met_date": "2020-01-01T15:00:35"}',
+        self.assertEqual('{"_node.nid1.met_start": "2020-01-01T15:00:30", "_node.nid1.last_met_date": "2020-01-01T15:00:35"}',
                          json.dumps(state))
